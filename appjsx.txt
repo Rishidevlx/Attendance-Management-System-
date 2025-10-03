@@ -1,0 +1,39 @@
+/login-page-with-mern (Main Project Folder)
+│
+├── client/                  <-- FRONTEND (React App)
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   │   └── skenetic-logo.jpg
+│   │   ├── components/
+│   │   │   ├── LoginSplineAnimation.jsx
+│   │   │   └── SplineAnimation.jsx
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── config/                  <-- BACKEND
+│   └── db.js
+│
+├── controllers/
+│   └── userController.js
+│
+├── middleware/
+│   └── validationMiddleware.js
+│
+├── models/
+│   └── userModel.js
+│
+├── node_modules/
+│
+├── routes/
+│   └── userRoutes.js
+│
+├── .env
+├── .gitignore
+├── package.json
+└── server.js
