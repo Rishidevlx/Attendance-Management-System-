@@ -14,6 +14,9 @@ const createAdmin = async () => {
     
     const adminExists = await User.findOne({ email: adminEmail });
 
+    // --- FIX STARTS HERE ---
+    
+    // Case 1: Admin user illaama irundha, puthusa create panrom
     if (!adminExists) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(adminPassword, salt);
@@ -22,12 +25,22 @@ const createAdmin = async () => {
         name: 'Admin',
         email: adminEmail,
         password: hashedPassword,
-        role: 'admin',
+        role: 'admin', // Make sure role is set to 'admin'
       });
       console.log('Admin user successfully create aayiduchu!');
+    } 
+    // Case 2: Admin user irundhu, aana avaruku 'admin' role illana, role-ah update panrom
+    else if (adminExists && adminExists.role !== 'admin') {
+      await User.updateOne(
+        { email: adminEmail },
+        { $set: { role: 'admin' } }
+      );
+      console.log('Existing user-ku Admin role successfully update aayiduchu!');
     }
+    // --- FIX ENDS HERE ---
+
   } catch (error) {
-    console.error('Admin user create panrapo error:', error);
+    console.error('Admin user create/update panrapo error:', error);
   }
 };
 
@@ -36,7 +49,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     
-    // --- NEW: DB connect aanadhum, admin create panra function-a call panrom ---
+    // DB connect aanadhum, admin create/update panra function-a call panrom
     await createAdmin();
 
   } catch (error) {

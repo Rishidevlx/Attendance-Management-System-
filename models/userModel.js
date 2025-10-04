@@ -20,7 +20,31 @@ const userSchema = mongoose.Schema(
       enum: ['student', 'admin'],
       default: 'student',
     },
-    // --- THE FINAL SCHEMA: Making fields explicit and optional ---
+    age: {
+      type: Number,
+      required: false,
+    },
+    phone: {
+      type: String,
+      required: false,
+    },
+    domain: {
+      type: String,
+      required: false,
+    },
+    collegeName: {
+      type: String,
+      required: false,
+    },
+    howDidYouKnow: {
+      type: String,
+      required: false,
+    },
+    // --- THE NEW "GATEKEEPER" FIELD ---
+    hasCompletedSurvey: {
+      type: Boolean,
+      default: false,
+    },
     passwordResetOtp: {
       type: String,
       required: false, 
