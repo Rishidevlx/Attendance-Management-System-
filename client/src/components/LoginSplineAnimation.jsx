@@ -4,7 +4,7 @@ import React from 'react';
 const LoginSplineAnimation = () => {
   return (
     <iframe
-      src='https://my.spline.design/nexbotrobotcharacterconcept-eePV1ud4R4h897hLew1fPgh2/'
+      src='https://my.spline.design/genkubgreetingrobot-dHkC8WmEOeObVhqQioTjKdt7/'
       frameBorder='0'
       width='100%'
       height='100%'

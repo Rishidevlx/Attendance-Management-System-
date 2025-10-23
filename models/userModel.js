@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema(
       enum: ['student', 'admin'],
       default: 'student',
     },
+    // --- NEW FIELD to control student login ---
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
     age: {
       type: Number,
       required: false,
@@ -40,7 +45,6 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    // --- THE NEW "GATEKEEPER" FIELD ---
     hasCompletedSurvey: {
       type: Boolean,
       default: false,
@@ -50,7 +54,7 @@ const userSchema = mongoose.Schema(
       required: false, 
     },
     passwordResetExpires: {
-      type: Number,
+      type: Date,
       required: false,
     },
   },
@@ -62,4 +66,3 @@ const userSchema = mongoose.Schema(
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
-

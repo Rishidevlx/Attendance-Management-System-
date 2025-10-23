@@ -15,20 +15,34 @@ const attendanceSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    // --- CHANGE: Added 'Approved' and 'Declined' for leave requests ---
     status: {
       type: String,
       required: true,
-      enum: ['Present', 'Absent', 'Pending', 'Late'],
+      enum: ['Present', 'Absent', 'Pending', 'Late', 'Approved', 'Declined'],
       default: 'Pending',
     },
+    // --- CHANGE: Added 'Leave' as a possible type ---
     type: {
       type: String,
+      enum: ['Check-in', 'Leave'],
       default: 'Check-in',
     },
     reason: {
       type: String,
       default: '-',
     },
+    wasLate: {
+      type: Boolean,
+      default: false,
+    },
+    // --- NEW: Fields specifically for leave requests ---
+    leaveEndDate: {
+      type: Date,
+    },
+    leaveDuration: {
+        type: Number, // In days
+    }
   },
   {
     timestamps: true,

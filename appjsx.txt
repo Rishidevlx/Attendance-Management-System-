@@ -1,39 +1,80 @@
-/login-page-with-mern (Main Project Folder)
+attendance-management-system/
 │
-├── client/                  <-- FRONTEND (React App)
+├── client/                     (Frontend - React + Vite)
+│   ├── node_modules/         (Frontend dependencies)
 │   ├── public/
+│   │   └── favicon.ico       (Static assets)
 │   ├── src/
 │   │   ├── assets/
+│   │   │   ├── react.svg
 │   │   │   └── skenetic-logo.jpg
 │   │   ├── components/
 │   │   │   ├── LoginSplineAnimation.jsx
 │   │   │   └── SplineAnimation.jsx
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── .gitignore
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package.json
+│   │   ├── pages/
+│   │   │   ├── admin/
+│   │   │   │   ├── AdminInfoPage.jsx
+│   │   │   │   ├── AdminSettingsPage.jsx
+│   │   │   │   ├── AttendanceReportsPage.jsx
+│   │   │   │   ├── AttendanceRequestsPage.jsx
+│   │   │   │   ├── DashboardContent.jsx
+│   │   │   │   ├── LateAttendancePage.jsx
+│   │   │   │   ├── LeaveRequestsAdminPage.jsx
+│   │   │   │   └── StudentsPage.jsx
+│   │   │   └── student/
+│   │   │       ├── AttendancePage.jsx
+│   │   │       ├── InfoPage.jsx
+│   │   │       ├── LateAttendancePage.jsx
+│   │   │       ├── LeaveRequestPage.jsx
+│   │   │       ├── ProfilePage.jsx
+│   │   │       ├── SettingsPage.jsx
+│   │   │       ├── StudentDashboardContent.jsx
+│   │   │       └── SurveyPage.jsx
+│   │   ├── Admin.jsx         (Admin layout/wrapper)
+│   │   ├── App.jsx           (Main App component & routes)
+│   │   ├── main.jsx          (React DOM render - entry)
+│   │   └── User.jsx          (Student layout/wrapper)
+│   ├── .gitignore            (Client-specific gitignore)
+│   ├── index.html            (Vite's HTML entry point)
+│   ├── package.json          (Frontend 'package.json')
+│   ├── package-lock.json
+│   ├── README.md
 │   └── vite.config.js
 │
-├── config/                  <-- BACKEND
-│   └── db.js
+├── config/                   (Backend - Configuration)
+│   └── db.js                 (MongoDB connection logic)
 │
-├── controllers/
+├── controllers/              (Backend - Business Logic)
+│   ├── attendanceController.js
+│   ├── informationController.js
+│   ├── settingsController.js
 │   └── userController.js
 │
-├── middleware/
+├── middleware/               (Backend - e.g., token check)
+│   ├── authMiddleware.js
 │   └── validationMiddleware.js
 │
-├── models/
+├── models/                   (Backend - MongoDB Schemas)
+│   ├── attendanceModel.js
+│   ├── informationModel.js
+│   ├── settingsModel.js
 │   └── userModel.js
 │
-├── node_modules/
-│
-├── routes/
+├── routes/                   (Backend - API Endpoints)
+│   ├── attendanceRoutes.js
+│   ├── informationRoutes.js
+│   ├── settingsRoutes.js
 │   └── userRoutes.js
 │
-├── .env
-├── .gitignore
-├── package.json
-└── server.js
+├── utils/                    (Backend - e.g., email service)
+│   ├── emailTemplates.js
+│   └── sendEmail.js
+│
+├── node_modules/             (Backend dependencies)
+│
+├── .env                      (Backend secrets - DB string, JWT secret, etc.)
+├── .gitignore                (Main project gitignore)
+├── app.js                    (Express app setup, middleware, routes)
+├── package.json              (Backend 'package.json')
+├── package-lock.json
+└── server.js                 (Server entry point - Connects to DB & starts server)
