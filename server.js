@@ -21,7 +21,7 @@ const app = express();
 // Indha list la irukuravangala mattum namma API ah use panna anumathikirom
 const whitelist = [
   'http://localhost:5173', // Unga local frontend
-  'https://app.yourdomain.com' // Unga future production frontend
+  'https://skeneticdigital-attendance.netlify.app' // <-- ✅✅ MODIFIED LINE ✅✅
 ];
 
 // Neenga subdomain vanginathum, 'https://app.yourdomain.com' ah unga correct URL ku maathikonga
