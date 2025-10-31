@@ -1,0 +1,624 @@
+/* ============================================= */
+/* == Global Mobile Responsive Styles (<= 992px) == */
+/* ============================================= */
+@media (max-width: 992px) {
+
+  /* --- General Layout & Spacing --- */
+  body {
+    font-size: 14px;
+    /* --- ⭐⭐ FIX: Added overflow-x: hidden to prevent horizontal scroll --- */
+    overflow-x: hidden;
+  }
+
+  /* --- MODIFICATION: Adjust main content padding for mobile header --- */
+  .main-content {
+    padding: 1rem;
+    padding-top: calc(60px + 1rem); /* Add padding-top equal to header height + desired space */
+    margin-left: 0 !important; /* Ensure no left margin from desktop sidebar */
+    /* --- ⭐⭐ FIX v3: Ensure overflow is hidden and width is contained --- */
+    overflow-x: hidden; /* Prevent content from causing scroll */
+    width: 100%; /* Ensure it takes full width */
+    box-sizing: border-box; /* Include padding in width */
+  }
+
+  /* --- MODIFICATION: Adjust content area padding --- */
+  .content-area {
+    padding: 1rem;
+    margin-bottom: 1rem; /* Add some space at the bottom */
+    /* --- ⭐⭐ FIX v3: Ensure overflow is hidden and width is contained --- */
+    overflow-x: hidden; /* Prevent inner content from causing scroll */
+    width: 100%; /* Ensure it takes full width */
+    box-sizing: border-box; /* Include padding in width */
+  }
+
+  .card {
+    padding: 1rem;
+    /* --- ⭐⭐ FIX v4: Ensure cards also respect width --- */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  /* ============================================= */
+  /* == MOBILE NAVIGATION SYSTEM (Student & Admin) == */
+  /* ============================================= */
+
+  /* --- Hide Desktop Sidebar --- */
+  .sidebar {
+    display: none !important;
+  }
+
+  /* --- Mobile Header (the bar at the top) --- */
+  .mobile-header {
+    display: flex; /* Make visible by default on mobile */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    height: 60px;
+    background-color: var(--admin-sidebar-bg); /* Use admin sidebar color */
+    color: var(--admin-text-primary);
+    position: fixed; /* Make header sticky */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100; /* Above main content */
+    border-bottom: 1px solid var(--admin-bg); /* Use admin bg color for border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-header h2 {
+    font-size: 1.1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Handle long page titles */
+  }
+
+  /* --- Hamburger Toggle Button --- */
+  .mobile-menu-toggle {
+    background: none;
+    border: none;
+    color: var(--admin-text-primary);
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-left: 0.5rem; /* Space from title */
+  }
+
+  /* --- Navigation Overlay (the dark background) --- */
+  .mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 998; /* Below menu, above content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s linear; /* Delay hiding visibility */
+  }
+  .mobile-nav-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+
+  /* --- Mobile Menu (the sliding panel) --- */
+  .mobile-nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 80%; /* Ensure it doesn't take full width on small mobiles */
+    background-color: var(--admin-sidebar-bg); /* Use sidebar color */
+    color: var(--admin-text-primary);
+    z-index: 999; /* Above overlay */
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+  }
+  .mobile-nav-menu.open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    height: 60px; /* Match mobile header height */
+    border-bottom: 1px solid var(--admin-bg);
+    flex-shrink: 0; /* Prevent header from shrinking */
+  }
+  .mobile-nav-logo {
+    height: 35px;
+    width: 35px;
+    flex-shrink: 0;
+    /* Ensure logo image is visible if needed */
+    filter: brightness(0) invert(1);
+  }
+  .mobile-nav-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--admin-text-primary);
+  }
+
+  .mobile-menu-list {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex-grow: 1; /* Take remaining space */
+    overflow-y: auto; /* Allow scrolling if menu is long */
+  }
+
+  .mobile-menu-item a {
+    color: var(--admin-text-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .mobile-menu-item a:hover {
+     background-color: rgba(255, 255, 255, 0.05);
+     color: var(--admin-text-primary);
+  }
+  .mobile-menu-item.active > a {
+    background-color: var(--admin-bg); /* Use admin bg color */
+    color: var(--admin-text-primary);
+    font-weight: 600;
+    position: relative;
+  }
+   /* Active indicator line */
+  .mobile-menu-item.active > a::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--admin-accent); /* Use brand blue */
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+  }
+
+
+  .mobile-logout-section {
+    padding: 1rem 0;
+    border-top: 1px solid var(--admin-bg);
+    flex-shrink: 0; /* Prevent logout from shrinking */
+  }
+
+  /* Hide the Desktop Content Header on mobile */
+  .content-header {
+    display: none;
+  }
+
+
+  /* ============================================= */
+  /* == PAGE-SPECIFIC RESPONSIVE STYLES == */
+  /* ============================================= */
+
+  /* --- Headers with actions/filters --- */
+  .requests-header,
+  .summary-header,
+  .reports-header,
+  .filter-group, /* Stack filter groups */
+  .header-actions,
+  .header-actions-right {
+    flex-direction: column;
+    align-items: stretch; /* Make items take full width */
+    gap: 1rem;
+    width: 100%; /* Ensure full width */
+    margin-left: 0 !important;
+  }
+
+  .requests-header {
+    padding: 1rem; /* Adjust padding if needed */
+  }
+
+   /* Adjust search bar and selects */
+  .search-bar,
+  .filter-select,
+  .date-input {
+      max-width: none; /* Allow full width */
+      width: 100%;
+  }
+
+  /* Make date filters stack vertically too */
+  .date-filters {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 0.75rem;
+  }
+   .date-filters span { display: none; } /* Hide 'to' text */
+   .date-quick-filter { width: 100%; }
+
+   /* Center header actions */
+   .header-actions {
+       align-items: center;
+   }
+   .header-actions .action-btn {
+       width: 100%; /* Make action buttons full width */
+       justify-content: center;
+   }
+
+  /* --- Responsive Tables (Card Pattern - Default) --- */
+  .requests-table,
+  .reports-table,
+  .student-table,
+  .absent-list-table,
+  .domain-table,
+  .leave-details-table,
+  .attendance-table,
+  .leave-table {
+    border: none;
+    display: block;
+    width: 100%;
+  }
+
+  .requests-table thead,
+  .reports-table thead,
+  .student-table thead,
+  .absent-list-table thead,
+  .domain-table thead,
+  .leave-details-table thead,
+  .attendance-table thead,
+  .leave-table thead {
+    display: none;
+  }
+
+  .requests-table tr,
+  .reports-table tr,
+  .student-table tr,
+  .absent-list-table tr,
+  .domain-table tr,
+  .leave-details-table tr,
+  .attendance-table tr,
+  .leave-table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .card-list-scrollable tr:last-child {
+      margin-bottom: 0;
+  }
+
+  /* --- OVERLAP FIX V4: Flexbox + min-height + line-height --- */
+  .requests-table td,
+  .reports-table td,
+  .student-table td,
+  .absent-list-table td,
+  .domain-table td,
+  .leave-details-table td,
+  .attendance-table td,
+  .leave-table td {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 1rem 0; /* Increased vertical padding for taller cards */
+    border-bottom: 1px dashed var(--border-color);
+    position: relative;
+    min-height: 50px; /* Ensure minimum height */
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.5; /* Add line-height to data text */
+  }
+  /* --- End OVERLAP FIX V4 --- */
+
+  /* Remove border from last cell */
+  .requests-table tr td:last-child,
+  .reports-table tr td:last-child,
+  .student-table tr td:last-child,
+  .leave-details-table tr td:last-child,
+  .attendance-table tr td:last-child,
+  .leave-table tr td:last-child,
+  .absent-list-table tr td:last-child,
+  .domain-table tr td:last-child
+   {
+      border-bottom: none;
+  }
+
+  /* --- OVERLAP FIX V4: Adjust ::before styles --- */
+  .requests-table td::before,
+  .reports-table td::before,
+  .student-table td::before,
+  .absent-list-table td::before,
+  .domain-table td::before,
+  .leave-details-table td::before,
+  .attendance-table td::before,
+  .leave-table td::before {
+    content: attr(data-label);
+    width: auto;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: var(--light-text);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-bottom: 0.5rem; /* Increased space below label */
+  }
+  /* --- End OVERLAP FIX V4 --- */
+
+  /* Adjust action buttons layout within cards */
+  .action-buttons,
+  .action-icons {
+     justify-content: flex-start;
+     padding-top: 0.75rem;
+     flex-wrap: wrap;
+     gap: 0.5rem;
+     margin-top: 0.5rem;
+     border-top: 1px dashed var(--border-color);
+  }
+   tr td:first-child .action-buttons,
+   tr td:first-child .action-icons {
+       border-top: none;
+       margin-top: 0;
+   }
+    tr:has(td:only-child) .action-buttons,
+    tr:has(td:only-child) .action-icons {
+       border-top: none;
+       margin-top: 0;
+       padding-top: 0;
+   }
+    tr td:last-child:has(.action-buttons),
+    tr td:last-child:has(.action-icons) {
+        padding-bottom: 0;
+    }
+
+
+   /* Hide label for action columns */
+   .student-table td:last-child::before,
+   .requests-table td:last-child::before,
+   .reports-table td:last-child::before,
+   .leave-table td:last-child::before,
+   .attendance-table td:last-child::before
+    {
+       display: none;
+   }
+   /* Ensure action cells don't get unnecessary padding */
+    .requests-table tr td:last-child,
+    .reports-table tr td:last-child,
+    .student-table tr td:last-child,
+    .leave-table tr td:last-child,
+    .attendance-table tr td:last-child {
+        padding-top: 0.75rem;
+        padding-bottom: 0;
+   }
+
+
+  /* Style the .card-list-scrollable div for inner scroll */
+  .card-list-scrollable {
+      max-height: 450px; /* Adjust height for ~4 cards */
+      overflow-y: auto;
+      padding-right: 5px;
+      margin-right: -5px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-color) transparent;
+  }
+  .card-list-scrollable::-webkit-scrollbar { width: 6px; }
+  .card-list-scrollable::-webkit-scrollbar-track { background: transparent; margin-top: 1rem; margin-bottom: 1rem; }
+  .card-list-scrollable::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 10px; }
+  .card-list-scrollable::-webkit-scrollbar-thumb:hover { background-color: #CBD5E1; }
+
+
+  /* --- Dashboard Specific --- */
+  .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .shortcuts-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 0.75rem; }
+  .shortcut-card { padding: 1rem 0.5rem; font-size: 0.8rem; gap: 0.5rem; }
+  .shortcut-card svg { width: 20px; height: 20px; }
+  .charts-grid, .main-dashboard-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .chart-container { height: 250px; }
+  .pie-container { max-width: 200px; height: 200px; margin-bottom: 1rem; }
+  .pie-legend { grid-template-columns: 1fr; }
+  .welcome-banner { flex-direction: column; align-items: flex-start; padding: 1.5rem; gap: 1.5rem; }
+  .welcome-text h1 { font-size: 1.5rem; }
+  .profile-summary img { width: 40px; height: 40px; }
+  .quick-checkin-card { flex-direction: column; align-items: stretch; gap: 1rem; }
+  .checkin-btn { width: 100%; justify-content: center; }
+  .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .stats-container .card { margin-bottom: 0; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 1rem; border-left: 4px solid; border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); box-shadow: none; transition: none; }
+  .stats-container .card:hover { transform: none; box-shadow: none; border-top-color: var(--border-color); border-right-color: var(--border-color); border-bottom-color: var(--border-color); }
+  .stats-container .icon-wrapper { width: 40px; height: 40px; border-radius: 0.5rem; margin-bottom: 0.5rem; }
+  .stats-container .icon-wrapper svg { width: 20px; height: 20px; }
+  .stats-container h4 { font-size: 1.5rem; order: 2; }
+  .stats-container p { font-size: 0.8rem; order: 1; margin: 0; }
+  .calendar-container { padding: 1rem; }
+  .calendar-day { height: 35px; font-size: 0.8rem; }
+  .calendar-day-header { font-size: 0.75rem; padding: 0.3rem 0;}
+  .calendar-nav button { width: 30px; height: 30px; }
+
+  /* --- Modals --- */
+  .modal-content { max-width: 95%; padding: 1.5rem; }
+  .modal-title { font-size: 1.25rem; margin-bottom: 1.5rem; }
+  .modal-actions { flex-direction: column; gap: 0.75rem; }
+  .modal-actions .action-btn { width: 100%; justify-content: center; }
+  .form-grid { grid-template-columns: 1fr; }
+
+  /* --- Settings Page --- */
+  .settings-grid, .verification-grid, .leave-grid, .profile-grid { grid-template-columns: 1fr; } /* Combined grid resets */
+  .time-inputs { flex-direction: column; gap: 0.5rem; align-items: stretch; }
+
+  /* --- ⭐⭐ Student Info Page Mobile Fix V4 Start ⭐⭐ --- */
+  /* Target the grid specifically within the student layout */
+  .student-layout .student-info-grid {
+    grid-template-columns: 1fr; /* Force single column */
+    gap: 1.5rem; /* Add gap between stacked items */
+    padding: 0; /* Remove padding if applied directly to grid */
+    /* --- ⭐⭐ FIX v4: Ensure grid itself respects width --- */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Adjust feed panel height and remove outer padding */
+  .student-layout .feed-panel {
+    height: auto; /* Let content determine height */
+    min-height: 500px; /* Set a minimum height */
+    padding: 0; /* Remove padding from outer panel */
+    display: flex; /* Ensure flex direction works */
+    flex-direction: column; /* Stack header, content, input */
+    overflow: hidden; /* Prevent potential overflow issues */
+    border: 1px solid var(--border-color); /* Add border back */
+    border-radius: 1rem; /* Add border radius back */
+    /* --- ⭐⭐ FIX v4: Ensure panel respects width --- */
+    width: 100%;
+    box-sizing: border-box;
+  }
+   /* Apply padding to inner elements */
+   .student-layout .feed-header {
+      padding: 1rem; /* Apply padding to header */
+      flex-shrink: 0; /* Prevent header shrinking */
+      border-bottom: 1px solid var(--border-color); /* Add border */
+   }
+   .student-layout .feed-content {
+      padding: 1rem; /* Apply padding to content area */
+      flex-grow: 1; /* Allow content to take available space */
+      overflow-y: auto; /* Enable scroll ONLY for content */
+      overflow-x: hidden; /* Prevent horizontal scroll within content */
+      background-color: var(--white); /* Ensure background */
+   }
+   /* Remove message input area for students */
+   .student-layout .message-input-area {
+      display: none;
+   }
+
+  /* Adjust post item padding and margin */
+  .student-layout .post-item {
+    padding: 1rem;
+    margin-bottom: 1rem; /* Add margin between posts */
+    background-color: #F8FAFC; /* Light background for posts */
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    /* --- ⭐⭐ FIX v4: Ensure post item respects width --- */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .student-layout .feed-content .post-item:last-child {
+      margin-bottom: 0; /* Remove margin from last post */
+  }
+  .student-layout .post-item p,
+  .student-layout .post-item h4 {
+    max-width: 100%; /* Allow text to take full width */
+    color: var(--dark-text); /* Ensure text color */
+    word-wrap: break-word; /* Ensure long text wraps */
+  }
+  /* --- ⭐⭐ FIX v4: Ensure poll options respect width --- */
+  .student-layout .poll-options {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .student-layout .poll-option,
+  .student-layout .multi-poll-option {
+      width: 100%;
+      box-sizing: border-box;
+      word-wrap: break-word; /* Wrap long option text */
+  }
+  .student-layout .poll-option .progress-bar {
+      width: 100%; /* Ensure progress bar fits */
+  }
+
+  /* Remove post actions container for students */
+  .student-layout .post-actions {
+     display: none;
+  }
+  /* Adjust post footer for student view */
+  .student-layout .post-footer {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-color);
+  }
+
+
+  /* Stack side cards below feed */
+  .student-layout .side-cards-container {
+    margin-top: 0; /* Remove margin-top as they stack */
+    gap: 1.5rem; /* Increase gap between side cards */
+    /* --- ⭐⭐ FIX v4: Ensure container respects width --- */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .student-layout .side-card {
+     padding: 1.25rem; /* Adjust padding in side cards */
+     border: 1px solid var(--border-color);
+     border-radius: 1rem;
+     background: var(--white);
+     /* --- ⭐⭐ FIX v4: Ensure card respects width --- */
+     width: 100%;
+     box-sizing: border-box;
+  }
+   .student-layout .side-card-header {
+       padding-bottom: 0.75rem;
+       border-bottom: 1px solid var(--border-color);
+   }
+  .student-layout .side-card-list {
+      max-height: 250px; /* Increase max-height slightly */
+      margin-top: 1rem;
+  }
+  .student-layout .side-card-item {
+      padding: 0.75rem;
+      border: 1px solid transparent; /* Add transparent border for hover effect */
+  }
+  .student-layout .side-card-item:hover {
+       background-color: #EFF6FF; /* Lighter blue on hover */
+       border-color: #BFDBFE;
+  }
+   /* --- ⭐⭐ Student Info Page Mobile Fix V4 End ⭐⭐ --- */
+
+   /* --- Profile Page Responsive Fixes --- */
+   .profile-page .profile-grid { grid-template-columns: 1fr; }
+   .profile-page .details-grid { grid-template-columns: 1fr; gap: 1rem; }
+   .profile-page .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+   .profile-page .stat-card { gap: 1rem; padding: 1rem; }
+   .profile-page .stat-icon-wrapper { width: 48px; height: 48px; }
+   .profile-page .stat-icon-wrapper svg { width: 24px; height: 24px; }
+   .profile-page .stat-info h4 { font-size: 0.8rem; }
+   .profile-page .stat-info p { font-size: 1.75rem; }
+   /* --- End Profile Page Fixes --- */
+
+
+} /* End of @media (max-width: 992px) */
+
+/* ============================================= */
+/* == Desktop Styles to HIDE Mobile Elements == */
+/* ============================================= */
+@media (min-width: 993px) {
+  /* Hide mobile-specific navigation elements */
+  .mobile-header,
+  .mobile-nav-overlay,
+  .mobile-nav-menu {
+    display: none !important;
+  }
+
+  /* Ensure desktop sidebar is visible */
+  .sidebar {
+      display: flex !important; /* Override the mobile hide */
+  }
+
+  /* Ensure main content has correct margin */
+  .main-content {
+      /* Margin is handled by hover effect in User.jsx/Admin.jsx */
+       padding-top: 2rem; /* Reset padding-top */
+  }
+
+  /* Ensure desktop header inside content is visible */
+   .content-header {
+       display: flex !important; /* Override the mobile hide */
+   }
+}
+

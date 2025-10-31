@@ -4,15 +4,15 @@ import skeneticLogo from '../../assets/skenetic-logo.jpg';
 
 
 // --- ICONS ---
-const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>);
-const DownloadIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>);
-const PlusIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>);
+const SearchIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>);
+const DownloadIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>);
+const PlusIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>);
 const EditIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>);
 const DeleteIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>);
 const FileDownIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>);
 const AlertTriangleIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#991B1B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>);
-const CalendarIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>);
-const CheckSquareIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>);
+const CalendarIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>);
+const CheckSquareIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>);
 const XIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>);
 const NoResultsIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>);
 
@@ -85,12 +85,12 @@ const StudentsPage = () => {
     const [students, setStudents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState({text: '', type: ''});
-    
+
     const [domainFilter, setDomainFilter] = useState('All');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingStudent, setEditingStudent] = useState(null);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -117,7 +117,7 @@ const StudentsPage = () => {
             setIsLoading(true);
             const { data } = await axios.get('/api/users/students', config);
             setStudents(data);
-        } catch (err) { showMessage('Failed to fetch students.', 'error'); } 
+        } catch (err) { showMessage('Failed to fetch students.', 'error'); }
         finally { setIsLoading(false); }
     };
 
@@ -142,7 +142,7 @@ const StudentsPage = () => {
     const confirmDelete = async () => {
         const config = getAuthConfig();
         if (!config) return;
-        
+
         let idsToDelete = studentToDelete ? [studentToDelete._id] : selectedIds;
 
         try {
@@ -156,39 +156,73 @@ const StudentsPage = () => {
         } catch (err) { showMessage('Failed to delete students.', 'error'); }
         finally { closeDeleteModal(); }
     };
-    
+
     const handleDownloadAll = () => {
+        // --- Added safety check for window.jspdf ---
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            console.error("jsPDF library is not loaded.");
+            showMessage("Could not generate PDF. Library missing.", "error");
+            return;
+        }
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         doc.setFontSize(20);
         doc.text("Skenetic Digital - Student List", 14, 22);
         const img = new Image();
         img.src = skeneticLogo;
-        doc.addImage(img, 'JPG', 160, 5, 40, 35); 
-        doc.autoTable({
-            startY: 40,
-            head: [['ID', 'Name', 'Email', 'Join Date', 'Domain']],
-            body: filteredStudents.map((s, i) => [`SK${String(i + 1).padStart(3, '0')}`, s.name, s.email, new Date(s.createdAt).toLocaleDateString('en-GB'), s.domain || 'N/A']),
-            theme: 'striped', headStyles: { fillColor: [30, 41, 59] }
-        });
-        doc.save('skenetic-students-list.pdf');
+        // --- Add error handling for image loading ---
+        img.onload = () => {
+            doc.addImage(img, 'JPG', 160, 5, 40, 35);
+            generateTable();
+        };
+        img.onerror = () => {
+            console.error("Failed to load logo for PDF.");
+            generateTable(); // Generate table even if logo fails
+        };
+
+        const generateTable = () => {
+            doc.autoTable({
+                startY: 40,
+                head: [['ID', 'Name', 'Email', 'Join Date', 'Domain']],
+                body: filteredStudents.map((s, i) => [`SK${String(i + 1).padStart(3, '0')}`, s.name, s.email, new Date(s.createdAt).toLocaleDateString('en-GB'), s.domain || 'N/A']),
+                theme: 'striped', headStyles: { fillColor: [30, 41, 59] }
+            });
+            doc.save('skenetic-students-list.pdf');
+        };
     };
 
     const handleDownloadSingle = (student) => {
+         // --- Added safety check for window.jspdf ---
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            console.error("jsPDF library is not loaded.");
+            showMessage("Could not generate PDF. Library missing.", "error");
+            return;
+        }
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         doc.setFontSize(22); doc.setTextColor(30, 41, 59);
         doc.text("Student Details", 105, 25, null, null, "center");
         const img = new Image();
         img.src = skeneticLogo;
-        doc.addImage(img, 'JPG', 160, 5, 40, 35);
-        doc.autoTable({
-            startY: 40,
-            head: [['Field', 'Details']],
-            body: [['ID', `SK${String(students.findIndex(s => s._id === student._id) + 1).padStart(3, '0')}`], ['Name', student.name], ['Email', student.email], ['Join Date', new Date(student.createdAt).toLocaleDateString('en-GB')], ['Age', student.age || 'N/A'], ['Phone', student.phone || 'N/A'], ['Domain', student.domain || 'N/A']],
-            theme: 'grid', headStyles: { fillColor: [30, 41, 59] }, columnStyles: { 0: { fontStyle: 'bold' } }
-        });
-        doc.save(`student-${student.name.replace(/\s/g, '_')}.pdf`);
+         // --- Add error handling for image loading ---
+        img.onload = () => {
+            doc.addImage(img, 'JPG', 160, 5, 40, 35);
+             generateTable();
+        };
+        img.onerror = () => {
+            console.error("Failed to load logo for PDF.");
+            generateTable(); // Generate table even if logo fails
+        };
+
+        const generateTable = () => {
+            doc.autoTable({
+                startY: 40,
+                head: [['Field', 'Details']],
+                body: [['ID', `SK${String(students.findIndex(s => s._id === student._id) + 1).padStart(3, '0')}`], ['Name', student.name], ['Email', student.email], ['Join Date', new Date(student.createdAt).toLocaleDateString('en-GB')], ['Age', student.age || 'N/A'], ['Phone', student.phone || 'N/A'], ['Domain', student.domain || 'N/A']],
+                theme: 'grid', headStyles: { fillColor: [30, 41, 59] }, columnStyles: { 0: { fontStyle: 'bold' } }
+            });
+             doc.save(`student-${student.name.replace(/\s/g, '_')}.pdf`);
+        };
     };
 
     const openModal = (student = null) => { setEditingStudent(student); setIsModalOpen(true); };
@@ -213,61 +247,132 @@ const StudentsPage = () => {
             return matchesDomain && matchesSearch && matchesDate;
         });
     }, [students, domainFilter, startDate, endDate, searchTerm]);
-    
+
     const toggleSelectMode = () => { setSelectMode(!isSelectMode); setSelectedIds([]); };
     const handleSelectOne = (id) => setSelectedIds(prev => prev.includes(id) ? prev.filter(sid => sid !== id) : [...prev, id]);
     const handleSelectAll = () => {
-        if (selectedIds.length === filteredStudents.length) { setSelectedIds([]); } 
+        if (selectedIds.length === filteredStudents.length) { setSelectedIds([]); }
         else { setSelectedIds(filteredStudents.map(s => s._id)); }
     };
 
     return (
         <div>
+            {/* --- Style tag updated --- */}
             <style>{`
                 .summary-header-wrapper { border-bottom: none; padding-bottom: 0; margin-bottom: 1.5rem; }
-                .summary-header { display: flex; justify-content: space-between; align-items: center; }
-                .summary-header h2 { font-size: 1.5rem; font-weight: 700; margin: 0; }
-                .header-actions { display: flex; align-items: center; gap: 1rem; }
-                .action-btn { border: none; padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; white-space: nowrap; }
+                /* --- Mobile First: Stack Header Items --- */
+                .summary-header { display: flex; flex-direction: column; align-items: stretch; gap: 1rem; }
+                .summary-header h2 { font-size: 1.5rem; font-weight: 700; margin: 0; text-align: left; }
+                /* --- Mobile First: Stack Actions Below Title --- */
+                .header-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: flex-start; }
+                .action-btn {
+                    border: none;
+                    padding: 0.6rem 1rem; /* Smaller padding */
+                    border-radius: 0.5rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    font-size: 0.8rem; /* Smaller font size */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.4rem; /* Smaller gap */
+                    white-space: nowrap;
+                    flex-grow: 1; /* Allow buttons to grow */
+                    min-width: 120px; /* Minimum width */
+                }
                 .download-btn { background-color: var(--brand-blue); color: white; }
                 .add-student-btn { background-color: var(--brand-blue); color: white; }
                 .select-btn { background-color: #F1F5F9; color: var(--dark-text); }
                 .select-btn.active { background-color: #E2E8F0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
                 .delete-btn { background-color: #EF4444; color: var(--white); }
                 .delete-btn:disabled { background-color: #F87171; cursor: not-allowed; }
-                .reports-header { background: var(--white); padding: 1.25rem 1.5rem; border-radius: 1rem; border: 1px solid var(--border-color); display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
-                .filter-group { display: flex; align-items: center; gap: 0.5rem; }
-                .filter-select, .search-bar input, .date-input { border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.75rem; background: #F8FAFC; font-size: 0.9rem; }
-                .search-bar { position: relative; flex-grow: 1; }
-                .search-bar input { padding-left: 35px; width: 100%; }
-                .search-bar svg { position: absolute; left: 10px; top: 13px; color: var(--light-text); }
-                .clear-date-btn { background: none; border: none; cursor: pointer; color: var(--light-text); padding: 0.5rem; }
+
+                /* --- Desktop: Align Title and Actions Horizontally --- */
+                @media (min-width: 768px) {
+                    .summary-header { flex-direction: row; justify-content: space-between; align-items: center; }
+                    .header-actions { justify-content: flex-end; flex-grow: 0; } /* Reset grow */
+                    .action-btn { flex-grow: 0; } /* Reset grow */
+                }
+
+
+                /* --- Filter Header --- */
+                .reports-header { background: var(--white); padding: 1rem; border-radius: 1rem; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+                .filter-group { display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; width: 100%; }
+                .filter-select, .search-bar input, .date-input { border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 0.75rem; background: #F8FAFC; font-size: 0.9rem; width: 100%; box-sizing: border-box; }
+                .search-bar { position: relative; }
+                .search-bar input { padding-left: 35px; }
+                .search-bar svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--light-text); }
+                .date-filter-inputs { display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; width: 100%; }
+                .date-filter-inputs span { display: none; } /* Hide 'to' on mobile */
+                .clear-date-btn { background: none; border: none; cursor: pointer; color: var(--light-text); padding: 0.5rem; align-self: flex-end; }
+
+                /* --- Desktop Filters --- */
+                 @media (min-width: 992px) {
+                    .reports-header { flex-direction: row; align-items: center; gap: 1.5rem; }
+                    .filter-group { flex-direction: row; align-items: center; width: auto; flex-grow: 0; }
+                    .filter-select { width: auto; min-width: 180px; }
+                    .search-bar { flex-grow: 1; }
+                    .search-bar input { width: 100%; }
+                    .date-filter-inputs { flex-direction: row; width: auto; gap: 0.5rem; }
+                    .date-filter-inputs span { display: inline; }
+                    .date-input { width: auto; }
+                    .clear-date-btn { align-self: center; }
+                 }
+
+
+                /* --- Table Wrapper --- */
+                .table-wrapper {
+                    border: 1px solid var(--border-color);
+                    border-radius: 1rem;
+                    background-color: var(--white);
+                    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+                    overflow: hidden;
+                }
+
                 .student-table { width: 100%; border-collapse: collapse; }
                 .student-table th, .student-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
                 .student-table thead { background-color: #F8FAFC; }
                 .student-table th { font-size: 0.8rem; text-transform: uppercase; color: var(--light-text); font-weight: 600; }
-                .action-icons { display: flex; gap: 1.25rem; }
-                .action-icons button { background: none; border: none; cursor: pointer; color: var(--light-text); }
+                .student-table tr:last-child td { border-bottom: none; }
+                .action-icons { display: flex; gap: 0.75rem; } /* Reduced gap */
+                .action-icons button { background: none; border: none; cursor: pointer; color: var(--light-text); padding: 0.25rem; } /* Added padding */
+                .action-icons button:hover { color: var(--dark-text); }
                 .custom-checkbox { width: 18px; height: 18px; accent-color: var(--brand-blue); }
+
+                /* --- Modals (Keep as is) --- */
                 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
                 .modal-content { background: var(--white); padding: 2.5rem; border-radius: 1rem; width: 100%; max-width: 650px; }
                 .modal-title { font-size: 1.75rem; margin-bottom: 2.5rem; text-align: center; }
                 .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
-                .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
+                .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; } /* Default 1 column */
+                 @media (min-width: 576px) { .form-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; } } /* 2 columns on larger */
                 .form-group label { font-size: 0.8rem; margin-bottom: 0.5rem; }
-                .input-field { width: 100%; padding: 0.7rem; border-radius: 0.5rem; border: 1px solid var(--border-color); }
+                .input-field { width: 100%; padding: 0.7rem; border-radius: 0.5rem; border: 1px solid var(--border-color); box-sizing: border-box; } /* Added box-sizing */
+
+                /* --- Messages (Keep as is) --- */
                 .message-box { padding: 1rem; border-radius: 0.5rem; text-align: center; }
                 .error-message-box { background-color: #FEE2E2; color: #B91C1C; }
                 .success-message-box { background-color: #D1FAE5; color: #047857; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1100; }
+                .no-results-container { text-align: center; padding: 4rem; }
+                .no-results-container svg { margin-bottom: 1rem; color: #CBD5E1; }
+                .no-results-container h3 { color: var(--dark-text); margin-bottom: 0.5rem; }
+                .no-results-container p { color: var(--light-text); }
+
+                 /* --- Scrollable container for mobile cards --- */
+                .card-list-scrollable { /* Styles applied via adminresponsive.css */ }
+
             `}</style>
 
             {isModalOpen && <StudentFormModal student={editingStudent} onClose={closeModal} onSave={handleSaveStudent} />}
             {isDeleteModalOpen && <DeleteConfirmationModal count={studentToDelete ? 1 : selectedIds.length} onConfirm={confirmDelete} onCancel={closeDeleteModal} />}
             {message.text && <div className={`message-box ${message.type === 'error' ? 'error-message-box' : 'success-message-box'}`}>{message.text}</div>}
 
+            {/* --- Header Section --- */}
             <div className="summary-header-wrapper">
                 <div className="summary-header">
                     <h2>Students</h2>
+                    {/* --- Wrap buttons in header-actions --- */}
                     <div className="header-actions">
                         <button className="action-btn add-student-btn" onClick={() => openModal()}><PlusIcon /> Add Student</button>
                         <button className={`action-btn select-btn ${isSelectMode ? 'active' : ''}`} onClick={toggleSelectMode}><CheckSquareIcon/> Select</button>
@@ -277,6 +382,7 @@ const StudentsPage = () => {
                 </div>
             </div>
 
+            {/* --- Filters Section --- */}
             <div className="reports-header">
                  <div className="filter-group">
                     <select className="filter-select" value={domainFilter} onChange={e => setDomainFilter(e.target.value)}>
@@ -285,9 +391,11 @@ const StudentsPage = () => {
                 </div>
                 <div className="filter-group">
                     <CalendarIcon/>
-                    <input type="date" className="date-input" value={startDate} onChange={e => setStartDate(e.target.value)} />
-                    <span>-</span>
-                    <input type="date" className="date-input" value={endDate} onChange={e => setEndDate(e.target.value)} />
+                    <div className="date-filter-inputs">
+                        <input type="date" className="date-input" value={startDate} onChange={e => setStartDate(e.target.value)} />
+                        <span>-</span>
+                        <input type="date" className="date-input" value={endDate} onChange={e => setEndDate(e.target.value)} />
+                    </div>
                     {(startDate || endDate) && <button className="clear-date-btn" onClick={() => {setStartDate(''); setEndDate('')}}><XIcon /></button>}
                 </div>
                 <div className="filter-group search-bar">
@@ -296,44 +404,55 @@ const StudentsPage = () => {
                 </div>
             </div>
 
-            <div className="card" style={{ padding: 0, marginTop: '1.5rem' }}>
-                {isLoading ? <p style={{ padding: '2rem', textAlign: 'center' }}>Loading...</p> : filteredStudents.length > 0 ? (
-                    <table className="student-table">
-                        <thead>
-                            <tr>
-                                {isSelectMode && <th><input type="checkbox" className="custom-checkbox" onChange={handleSelectAll} checked={selectedIds.length === filteredStudents.length && filteredStudents.length > 0}/></th>}
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Join Date</th>
-                                <th>Domain</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredStudents.map((student, index) => (
-                                <tr key={student._id}>
-                                    {isSelectMode && <td><input type="checkbox" className="custom-checkbox" checked={selectedIds.includes(student._id)} onChange={() => handleSelectOne(student._id)}/></td>}
-                                    <td>SK{String(index + 1).padStart(3, '0')}</td>
-                                    <td>{student.name}</td>
-                                    <td>{student.email}</td>
-                                    <td>{new Date(student.createdAt).toLocaleDateString('en-GB')}</td>
-                                    <td>{student.domain || 'N/A'}</td>
-                                    <td>
-                                        <div className="action-icons">
-                                            <button onClick={() => openModal(student)} title="Edit"><EditIcon /></button>
-                                            <button onClick={() => openDeleteModal(student)} title="Delete"><DeleteIcon /></button>
-                                            <button onClick={() => handleDownloadSingle(student)} title="Download Details"><FileDownIcon /></button>
-                                        </div>
-                                    </td>
+            {/* --- Table Section --- */}
+            <div className="table-wrapper">
+                <div className="card-list-scrollable">
+                    {isLoading ? <p style={{ padding: '2rem', textAlign: 'center' }}>Loading...</p> : filteredStudents.length > 0 ? (
+                        <table className="student-table">
+                            <thead>
+                                <tr>
+                                    {isSelectMode && <th><input type="checkbox" className="custom-checkbox" onChange={handleSelectAll} checked={selectedIds.length === filteredStudents.length && filteredStudents.length > 0}/></th>}
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Join Date</th>
+                                    <th>Domain</th>
+                                    <th>Action</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                 ) : ( <div style={{ textAlign: 'center', padding: '4rem' }}><NoResultsIcon /><h3>No Students Found</h3><p>Try adjusting your filters.</p></div> )}
+                            </thead>
+                            <tbody>
+                                {filteredStudents.map((student, index) => (
+                                    <tr key={student._id}>
+                                        {isSelectMode && <td data-label="Select"><input type="checkbox" className="custom-checkbox" checked={selectedIds.includes(student._id)} onChange={() => handleSelectOne(student._id)}/></td>}
+                                        <td data-label="ID">SK{String(index + 1).padStart(3, '0')}</td>
+                                        <td data-label="Name">{student.name}</td>
+                                        <td data-label="Email">{student.email}</td>
+                                        <td data-label="Join Date">{new Date(student.createdAt).toLocaleDateString('en-GB')}</td>
+                                        <td data-label="Domain">{student.domain || 'N/A'}</td>
+                                        <td data-label="Action">
+                                            <div className="action-icons">
+                                                <button onClick={() => openModal(student)} title="Edit"><EditIcon /></button>
+                                                <button onClick={() => openDeleteModal(student)} title="Delete"><DeleteIcon /></button>
+                                                <button onClick={() => handleDownloadSingle(student)} title="Download Details"><FileDownIcon /></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                         <div className="no-results-container">
+                             <NoResultsIcon />
+                             <h3>No Students Found</h3>
+                             <p>Try adjusting your filters.</p>
+                         </div>
+                     )}
+                </div>
             </div>
+            {/* --- End wrapper --- */}
         </div>
     );
 };
 
 export default StudentsPage;
+

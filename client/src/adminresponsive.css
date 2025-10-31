@@ -1,0 +1,681 @@
+/* ============================================= */
+/* == Admin Panel Responsive Styles (<= 992px) == */
+/* ============================================= */
+@media (max-width: 992px) {
+
+  /* --- Use existing global mobile styles --- */
+  /* Import or copy relevant styles from responsive.css if needed, */
+  /* but prefer reusing existing ones if they apply to both panels. */
+  /* Example: General layout, fonts, card styles might be reusable */
+
+  /* --- Admin Layout Adjustments --- */
+  .admin-layout .main-content {
+    padding: 1rem;
+    padding-top: calc(60px + 1rem); /* Account for mobile header */
+    margin-left: 0 !important; /* Override desktop margin */
+  }
+
+  .admin-layout .content-area {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* --- MOBILE NAVIGATION SYSTEM (Copied & adapted from responsive.css) --- */
+  /* --- Hide Desktop Sidebar --- */
+  .admin-layout .sidebar {
+    display: none !important;
+  }
+
+  /* --- Mobile Header --- */
+  .admin-layout .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    height: 60px;
+    background-color: var(--admin-sidebar-bg);
+    color: var(--admin-text-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--admin-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .admin-layout .mobile-header h2 {
+    font-size: 1.1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-layout .mobile-menu-toggle {
+    background: none;
+    border: none;
+    color: var(--admin-text-primary);
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+
+  /* --- Navigation Overlay --- */
+  .admin-layout .mobile-nav-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s linear;
+  }
+  .admin-layout .mobile-nav-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+
+  /* --- Mobile Menu --- */
+  .admin-layout .mobile-nav-menu {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 280px;
+    max-width: 80%;
+    background-color: var(--admin-sidebar-bg);
+    color: var(--admin-text-primary);
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+  }
+  .admin-layout .mobile-nav-menu.open {
+    transform: translateX(0);
+  }
+
+  .admin-layout .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    height: 60px;
+    border-bottom: 1px solid var(--admin-bg);
+    flex-shrink: 0;
+  }
+  .admin-layout .mobile-nav-logo {
+    height: 35px;
+    width: 35px;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+  }
+  .admin-layout .mobile-nav-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--admin-text-primary);
+  }
+
+  .admin-layout .mobile-menu-list {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .admin-layout .mobile-menu-item a {
+    color: var(--admin-text-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+   .admin-layout .mobile-menu-item a:hover {
+     background-color: rgba(255, 255, 255, 0.05);
+     color: var(--admin-text-primary);
+  }
+  .admin-layout .mobile-menu-item.active > a {
+    background-color: var(--admin-bg);
+    color: var(--admin-text-primary);
+    font-weight: 600;
+    position: relative;
+  }
+  .admin-layout .mobile-menu-item.active > a::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background-color: var(--admin-accent);
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+  }
+
+   /* Submenu Styles for Mobile */
+  .admin-layout .mobile-submenu-list {
+    list-style: none;
+    /* --- CORRECTION 1: Adjusted padding for better indentation --- */
+    padding-left: calc(1.5rem + 1rem); /* Base padding + Parent item gap */
+    background-color: rgba(0,0,0,0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+  .admin-layout .mobile-submenu-list.open {
+    max-height: 200px; /* Adjust as needed */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .admin-layout .mobile-submenu-item a {
+     /* --- CORRECTION 1: Use padding-left only --- */
+    padding: 0.75rem 0 0.75rem 1.5rem; /* Indent further */
+    font-size: 0.9rem;
+    color: var(--admin-text-secondary);
+  }
+  .admin-layout .mobile-submenu-item.active a {
+    color: var(--admin-text-primary);
+    font-weight: 600;
+  }
+   .admin-layout .mobile-submenu-item a:hover {
+    color: var(--admin-text-primary);
+  }
+
+  .admin-layout .mobile-logout-section {
+    padding: 1rem 0;
+    border-top: 1px solid var(--admin-bg);
+    flex-shrink: 0;
+  }
+
+  /* Hide Desktop Content Header */
+  .admin-layout .admin-header { /* Target specific admin header */
+    display: none;
+  }
+
+  /* --- DASHBOARD SPECIFIC MOBILE STYLES --- */
+  .admin-layout .stats-grid {
+    grid-template-columns: 1fr; /* Stack stat cards */
+    gap: 1rem;
+  }
+  .admin-layout .stat-card {
+      flex-direction: column; /* Stack icon and text */
+      align-items: flex-start; /* Align text left */
+      padding: 1rem;
+  }
+  .admin-layout .stat-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0.5rem;
+  }
+  .admin-layout .stat-icon-wrapper svg {
+       width: 24px;
+       height: 24px;
+  }
+  .admin-layout .stat-info p {
+      font-size: 1.75rem; /* Slightly smaller number */
+  }
+
+  /* Quick Actions - 3 Columns */
+  .admin-layout .quick-actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .admin-layout .action-card {
+    padding: 1rem 0.5rem;
+    gap: 0.5rem;
+  }
+   .admin-layout .action-card svg {
+       width: 20px; height: 20px;
+   }
+   .admin-layout .action-card span {
+       font-size: 0.8rem;
+   }
+   .admin-layout .action-count-badge {
+       width: 20px; height: 20px; font-size: 0.65rem; top: 0.5rem; right: 0.5rem;
+   }
+
+  .admin-layout .charts-grid {
+    grid-template-columns: 1fr; /* Stack charts */
+    gap: 1.5rem;
+  }
+  .admin-layout .chart-container {
+    height: 300px; /* Adjust chart height */
+  }
+  .admin-layout .pie-container {
+      max-width: 250px; /* Adjust pie size */
+      height: 250px;
+      margin-bottom: 1rem;
+  }
+  .admin-layout .pie-legend {
+      grid-template-columns: 1fr; /* Stack legend items */
+      justify-items: center; /* Center legend items */
+  }
+
+  /* --- Mobile Table Card Styles --- */
+  /* Apply card styles to ALL admin tables */
+  .admin-layout .absent-list-table,
+  .admin-layout .domain-table,
+  .admin-layout .student-table,
+  .admin-layout .requests-table,
+  .admin-layout .reports-table,
+  .admin-layout .leave-table
+  {
+      border: none;
+      display: block; /* Change from table */
+      width: 100%;
+  }
+
+  .admin-layout .absent-list-table thead,
+  .admin-layout .domain-table thead,
+  .admin-layout .student-table thead,
+  .admin-layout .requests-table thead,
+  .admin-layout .reports-table thead,
+  .admin-layout .leave-table thead
+  {
+      display: none; /* Hide table headers */
+  }
+
+  /* --- Card styles for table rows --- */
+  .admin-layout .absent-list-table tr,
+  .admin-layout .domain-table tr,
+  .admin-layout .student-table tr,
+  .admin-layout .requests-table tr,
+  .admin-layout .reports-table tr,
+  .admin-layout .leave-table tr
+  {
+      display: block; /* Make rows block elements */
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      /* --- ⚠️ REMOVED PADDING FROM TR ⚠️ --- */
+      /* padding: 1rem; */
+      background-color: var(--white);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      width: 100%;
+      box-sizing: border-box; /* Include padding in width calculation */
+      /* Add overflow hidden to contain child padding */
+      overflow: hidden;
+  }
+
+  /* Remove margin from last card inside scrollable */
+  .admin-layout .card-list-scrollable tr:last-child {
+      margin-bottom: 0;
+  }
+
+  /* --- Styles for table cells within cards --- */
+  .admin-layout .absent-list-table td,
+  .admin-layout .domain-table td,
+  .admin-layout .student-table td,
+  .admin-layout .requests-table td,
+  .admin-layout .reports-table td,
+  .admin-layout .leave-table td
+  {
+      display: flex; /* Use flex for label + content */
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      /* Apply consistent padding to all sides */
+      padding: 1rem;
+      /* Keep border-bottom for separation, except last child */
+      border-bottom: 1px dashed var(--border-color);
+      position: relative; /* Needed for ::before */
+      min-height: 40px; /* Minimum height for cells */
+      white-space: normal; /* Allow wrapping */
+      word-break: break-word; /* Break long words */
+      line-height: 1.5; /* Spacing for data */
+  }
+
+  /* Remove border from last cell in each card */
+  .admin-layout .absent-list-table tr td:last-child,
+  .admin-layout .domain-table tr td:last-child,
+  .admin-layout .student-table tr td:last-child,
+  .admin-layout .requests-table tr td:last-child,
+  .admin-layout .reports-table tr td:last-child,
+  .admin-layout .leave-table tr td:last-child
+  {
+      border-bottom: none;
+  }
+  /* Remove top padding from first cell's ::before label */
+   .admin-layout .absent-list-table tr td:first-child::before,
+   .admin-layout .domain-table tr td:first-child::before,
+   .admin-layout .student-table tr td:first-child::before,
+   .admin-layout .requests-table tr td:first-child::before,
+   .admin-layout .reports-table tr td:first-child::before,
+   .admin-layout .leave-table tr td:first-child::before
+   {
+       /* Optional: Adjust if label spacing looks off */
+       /* margin-top: -0.25rem; */ /* Example adjustment */
+   }
+
+
+  /* Data labels (column headers) */
+  .admin-layout .absent-list-table td::before,
+  .admin-layout .domain-table td::before,
+  .admin-layout .student-table td::before,
+  .admin-layout .requests-table td::before,
+  .admin-layout .reports-table td::before,
+  .admin-layout .leave-table td::before
+  {
+      content: attr(data-label); /* Get text from data-label attribute */
+      width: auto; /* Allow label width to adjust */
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+      color: var(--light-text);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 0.5rem; /* Space between label and data */
+  }
+
+  /* Hide label for action columns */
+   .admin-layout .student-table td:last-child::before,
+   .admin-layout .requests-table td:last-child::before,
+   .admin-layout .reports-table td:last-child::before,
+   .admin-layout .leave-table td:last-child::before
+    {
+       display: none;
+   }
+   /* Ensure action cells don't get unnecessary padding */
+    .admin-layout .requests-table tr td:last-child,
+    .admin-layout .reports-table tr td:last-child,
+    .admin-layout .student-table tr td:last-child,
+    .admin-layout .leave-table tr td:last-child {
+        padding-top: 1rem; /* Restore top padding */
+        padding-bottom: 1rem; /* Restore bottom padding */
+   }
+   /* Adjust action buttons layout within cards */
+  .admin-layout .action-buttons,
+  .admin-layout .action-icons {
+     justify-content: flex-start; /* Align actions left */
+     padding-top: 0; /* Remove extra top padding */
+     flex-wrap: wrap;
+     gap: 0.5rem; /* Reduce gap */
+     margin-top: 0.5rem; /* Add some space above actions */
+     border-top: none; /* Remove dashed border */
+  }
+
+
+  /* Specific adjustments for domain table progress bar */
+  .admin-layout .domain-table td .progress-bar-container {
+      margin-top: 0.25rem;
+  }
+  .admin-layout .domain-table td span { /* Percentage text */
+      margin-top: 0.25rem;
+  }
+
+  /* --- Scrollable Card List Container (Outer Layout) --- */
+  .admin-layout .card-list-scrollable {
+      max-height: 450px; /* Outer fixed height */
+      overflow-y: auto; /* Enable vertical scroll for inner content */
+      padding: 0; /* REMOVED ALL PADDING */
+      /* --- REMOVED padding-right and margin-right --- */
+      /* padding-right: 0; */
+      /* margin-right: 0; */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: var(--border-color) transparent; /* Firefox */
+  }
+
+  /* Webkit Scrollbar Styling */
+  .admin-layout .card-list-scrollable::-webkit-scrollbar {
+      width: 6px;
+  }
+  .admin-layout .card-list-scrollable::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 1rem 0; /* Add margin to track to prevent hitting card edges */
+  }
+  .admin-layout .card-list-scrollable::-webkit-scrollbar-thumb {
+      background-color: var(--border-color);
+      border-radius: 10px;
+  }
+  .admin-layout .card-list-scrollable::-webkit-scrollbar-thumb:hover {
+      background-color: #CBD5E1; /* Slightly darker on hover */
+  }
+
+  /* --- CORRECTION 3: Table Wrapper Negative Margin Fix --- */
+  .admin-layout .table-wrapper {
+      margin-left: -1rem;
+      margin-right: -1rem;
+      width: calc(100% + 2rem);
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+  }
+
+
+  /* Make sure titles are not too big */
+  .admin-layout .section-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+  }
+
+} /* End of @media (max-width: 992px) */
+
+
+/* ============================================= */
+/* == Desktop Styles (>= 993px) == */
+/* ============================================= */
+@media (min-width: 993px) {
+  /* Hide mobile-specific navigation elements */
+  .admin-layout .mobile-header,
+  .admin-layout .mobile-nav-overlay,
+  .admin-layout .mobile-nav-menu {
+    display: none !important;
+  }
+
+  .admin-layout .sidebar {
+      display: flex !important;
+  }
+
+  .admin-layout .main-content {
+      padding-top: 2rem; /* Reset padding-top */
+      /* Desktop margin-left handled by hover in Admin.jsx */
+  }
+
+  .admin-layout .admin-header {
+       display: flex !important; /* Ensure desktop header is visible */
+   }
+
+   /* --- DASHBOARD DESKTOP STYLES --- */
+   .admin-layout .stats-grid {
+      /* This rule defines the grid layout for desktop */
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Creates flexible columns */
+      gap: 1.5rem;
+    }
+    .admin-layout .stat-card {
+      display: flex;
+      flex-direction: row; /* Ensure icon and text are side-by-side */
+      align-items: center; /* Vertically center items */
+      gap: 1.5rem;
+      background-color: var(--white);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+    .admin-layout .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08);
+      border-color: var(--brand-blue);
+    }
+    .admin-layout .stat-icon-wrapper {
+      width: 60px; /* Original size */
+      height: 60px; /* Original size */
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      margin-bottom: 0; /* Remove bottom margin */
+    }
+    .admin-layout .stat-icon-wrapper svg {
+        width: 28px; /* Original size */
+        height: 28px; /* Original size */
+    }
+    .admin-layout .stat-info p {
+      font-size: 2.25rem; /* Original size */
+      font-weight: 700;
+      color: var(--dark-text);
+      margin: 0;
+    }
+     .admin-layout .stat-info h4 {
+        margin: 0 0 0.25rem;
+        color: var(--light-text);
+        font-weight: 500;
+        font-size: 0.9rem;
+     }
+
+   .admin-layout .quick-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+    }
+    .admin-layout .action-card {
+      padding: 2rem 1rem; /* Original padding */
+      gap: 1rem; /* Original gap */
+    }
+    .admin-layout .action-card svg {
+        width: 24px; height: 24px; /* Original size */
+    }
+     .admin-layout .action-card span {
+       font-size: 1rem; /* Original size */
+     }
+      .admin-layout .action-count-badge {
+         width: 24px; height: 24px; font-size: 0.75rem; top: 1rem; right: 1rem; /* Original size/pos */
+     }
+
+
+   .admin-layout .charts-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Two columns */
+        gap: 1.5rem;
+    }
+    .admin-layout .chart-container {
+      height: 400px; /* Original height */
+    }
+    .admin-layout .pie-container {
+        max-width: 320px; /* Original size */
+        height: 320px;
+         margin-bottom: 1.5rem;
+    }
+    .admin-layout .pie-legend {
+        grid-template-columns: 1fr 1fr; /* Two columns */
+        justify-items: start; /* Align left */
+    }
+
+    /* Restore normal table layout for desktop */
+    .admin-layout .absent-list-table,
+    .admin-layout .domain-table,
+    .admin-layout .student-table, /* ADDED */
+    .admin-layout .requests-table, /* ADDED */
+    .admin-layout .reports-table, /* ADDED */
+    .admin-layout .leave-table /* ADDED */
+     {
+        display: table; /* Revert to table display */
+        border: none;
+        width: 100%;
+        border-collapse: collapse; /* Ensure borders work */
+    }
+    .admin-layout .absent-list-table thead,
+    .admin-layout .domain-table thead,
+    .admin-layout .student-table thead, /* ADDED */
+    .admin-layout .requests-table thead, /* ADDED */
+    .admin-layout .reports-table thead, /* ADDED */
+    .admin-layout .leave-table thead /* ADDED */
+    {
+        display: table-header-group; /* Show header */
+         background-color: #F8FAFC; /* Header background */
+    }
+    .admin-layout .absent-list-table tr,
+    .admin-layout .domain-table tr,
+    .admin-layout .student-table tr, /* ADDED */
+    .admin-layout .requests-table tr, /* ADDED */
+    .admin-layout .reports-table tr, /* ADDED */
+    .admin-layout .leave-table tr /* ADDED */
+    {
+        display: table-row; /* Revert rows */
+        margin-bottom: 0;
+        border: none;
+        border-radius: 0;
+        padding: 0; /* Remove card padding */
+        background-color: transparent;
+        box-shadow: none;
+        border-bottom: 1px solid var(--border-color); /* Add bottom border back */
+        width: auto; /* Reset width */
+        box-sizing: content-box; /* Reset box-sizing */
+        overflow: visible; /* Reset overflow */
+    }
+     .admin-layout .absent-list-table tr:last-child,
+     .admin-layout .domain-table tr:last-child,
+     .admin-layout .student-table tr:last-child, /* ADDED */
+     .admin-layout .requests-table tr:last-child, /* ADDED */
+     .admin-layout .reports-table tr:last-child, /* ADDED */
+     .admin-layout .leave-table tr:last-child /* ADDED */
+     {
+         border-bottom: none; /* Remove border from last row */
+     }
+
+    .admin-layout .absent-list-table td,
+    .admin-layout .domain-table td,
+    .admin-layout .student-table td, /* ADDED */
+    .admin-layout .requests-table td, /* ADDED */
+    .admin-layout .reports-table td, /* ADDED */
+    .admin-layout .leave-table td /* ADDED */
+    {
+        display: table-cell; /* Revert cells */
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        padding: 1rem; /* Restore padding */
+        border-bottom: none; /* Remove dashed border */
+        min-height: auto;
+        white-space: nowrap; /* Prevent wrapping */
+        word-break: normal;
+        line-height: normal; /* Restore default line height */
+    }
+    .admin-layout .absent-list-table td::before,
+    .admin-layout .domain-table td::before,
+    .admin-layout .student-table td::before, /* ADDED */
+    .admin-layout .requests-table td::before, /* ADDED */
+    .admin-layout .reports-table td::before, /* ADDED */
+    .admin-layout .leave-table td::before /* ADDED */
+    {
+        display: none; /* Hide data labels */
+    }
+     .admin-layout .absent-list-table th,
+     .admin-layout .domain-table th,
+     .admin-layout .student-table th, /* ADDED */
+     .admin-layout .requests-table th, /* ADDED */
+     .admin-layout .reports-table th, /* ADDED */
+     .admin-layout .leave-table th /* ADDED */
+     {
+         padding: 1rem; text-align: left;
+         font-size: 0.8rem; text-transform: uppercase; color: var(--light-text);
+         border-bottom: 1px solid var(--border-color);
+         white-space: nowrap;
+     }
+
+    /* Remove scroll wrapper styles for desktop */
+    .admin-layout .card-list-scrollable {
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+        margin-right: 0;
+        padding: 0; /* Remove scroll area padding */
+    }
+
+    /* --- CORRECTION 3: Remove Table Wrapper Negative Margin Fix --- */
+    .admin-layout .table-wrapper {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      border-left: 1px solid var(--border-color); /* Restore border */
+      border-right: 1px solid var(--border-color); /* Restore border */
+      border-radius: 1rem; /* Restore border-radius */
+   }
+}
+

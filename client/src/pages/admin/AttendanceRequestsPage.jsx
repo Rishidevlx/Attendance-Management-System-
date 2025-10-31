@@ -175,7 +175,7 @@ const AttendanceRequestsPage = () => {
                 .request-count-badge { background-color: var(--brand-blue); color: white; font-size: 1rem; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
                 .header-actions-right { display: flex; align-items: center; gap: 1rem; }
                 .search-bar { position: relative; width: 100%; max-width: 320px; }
-                .search-bar input { width: 100%; height: 44px; padding-left: 40px; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 0.9rem; }
+                .search-bar input { width: 90%; height: 44px; padding-left: 40px; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 0.9rem; }
                 .search-bar svg { position: absolute; left: 12px; top: 12px; color: var(--light-text); }
                 .requests-table { width: 100%; border-collapse: collapse; }
                 .requests-table td, .requests-table th { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border-color); vertical-align: middle; }

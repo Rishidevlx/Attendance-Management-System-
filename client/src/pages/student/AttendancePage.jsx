@@ -15,31 +15,35 @@ const AttendancePage = () => {
     const [isCheckedInToday, setIsCheckedInToday] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
     const [isLoading, setIsLoading] = useState(true);
-    
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    
     const [summaryStartDate, setSummaryStartDate] = useState('');
     const [summaryEndDate, setSummaryEndDate] = useState('');
-
     const [dateRangeMessage, setDateRangeMessage] = useState('');
     const [userLoginDate, setUserLoginDate] = useState(null);
-
     const [timeSettings, setTimeSettings] = useState(null);
     const [currentTime, setCurrentTime] = useState(new Date());
     const [isWindowOpen, setIsWindowOpen] = useState(false);
     const [countdown, setCountdown] = useState('');
-
     const [isOnApprovedLeave, setIsOnApprovedLeave] = useState(false);
 
     const getAuthConfig = () => {
         const token = JSON.parse(localStorage.getItem('user'))?.token;
         if (!token) {
             console.error("Authentication error: No token found.");
+            // Optionally show a persistent error message or redirect to login
+            showMessage("Authentication error. Please log in again.", 'error');
             return null;
         }
         return { headers: { Authorization: `Bearer ${token}` } };
     };
+
+    const showMessage = (text, type) => {
+        setMessage({ text, type });
+        // Auto-hide message after 5 seconds (adjust as needed)
+        setTimeout(() => setMessage({ text: '', type: '' }), 5000);
+    };
+
 
     const fetchHistoryAndSettings = async () => {
         const config = getAuthConfig();
@@ -54,19 +58,16 @@ const AttendancePage = () => {
             const historyData = historyRes.data;
             setHistory(historyData);
             setTimeSettings(settingsRes.data.value);
-            
+
             const today = new Date();
             today.setHours(0,0,0,0);
 
-            // --- LOGIC CORRECTION: Find today's record ---
             const todayRecord = historyData.find(item => {
                 const itemDate = new Date(item.date);
                 itemDate.setHours(0,0,0,0);
                 return itemDate.getTime() === today.getTime();
             });
 
-            // --- LOGIC CORRECTION: A request is submitted ONLY IF the status is NOT 'Declined' ---
-            // 'Declined' nu irundha, adhu submitted illa. So check-in button enable aagum.
             const hasSubmittedRequest = todayRecord && todayRecord.status !== 'Declined';
             setIsCheckedInToday(hasSubmittedRequest);
 
@@ -75,7 +76,7 @@ const AttendancePage = () => {
                     const leaveStart = new Date(item.date);
                     const leaveEnd = new Date(item.leaveEndDate);
                     leaveStart.setHours(0,0,0,0);
-                    leaveEnd.setHours(0,0,0,0);
+                    leaveEnd.setHours(23,59,59,999); // Check until end of leave day
                     return today >= leaveStart && today <= leaveEnd;
                 }
                 return false;
@@ -92,17 +93,14 @@ const AttendancePage = () => {
 
         } catch (error) {
             console.error("Failed to fetch initial data", error);
-            setMessage({ text: 'Could not load data.', type: 'error' });
+            setMessage({ text: 'Could not load data. Please check your connection.', type: 'error' });
         } finally {
             setIsLoading(false);
         }
     };
-    
-    useEffect(() => {
-        fetchHistoryAndSettings();
-    }, []);
 
     useEffect(() => {
+        fetchHistoryAndSettings();
         const timer = setInterval(() => {
             setCurrentTime(new Date());
         }, 1000);
@@ -111,16 +109,18 @@ const AttendancePage = () => {
 
     useEffect(() => {
         if (!timeSettings) return;
-        const { startTime, lateTime } = timeSettings;
+        const { startTime, lateTime } = timeSettings; // Use lateTime as the absolute end
         const [startHour, startMinute] = startTime.split(':').map(Number);
         const [lateHour, lateMinute] = lateTime.split(':').map(Number);
         const now = currentTime;
         const start = new Date(now);
         start.setHours(startHour, startMinute, 0, 0);
         const late = new Date(now);
-        late.setHours(lateHour, lateMinute, 59, 999);
+        late.setHours(lateHour, lateMinute, 59, 999); // Window closes at the end of late minute
+
         const isCurrentlyOpen = now >= start && now <= late;
         setIsWindowOpen(isCurrentlyOpen);
+
         let diff, hours, minutes, seconds, text;
         if (now < start) {
             diff = start - now;
@@ -132,33 +132,36 @@ const AttendancePage = () => {
             setCountdown('Check-in window is closed for today.');
             return;
         }
+
+        diff = Math.max(0, diff); // Ensure diff is not negative
         hours = Math.floor(diff / (1000 * 60 * 60));
         minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         seconds = Math.floor((diff % (1000 * 60)) / 1000);
         setCountdown(`${text} ${hours}h ${minutes}m ${seconds}s`);
+
     }, [currentTime, timeSettings]);
-    
+
 
     const handleCheckIn = async () => {
         try {
             const config = getAuthConfig();
             if(!config) return;
             await axios.post('/api/attendance/check-in', {}, config);
-            setMessage({ text: 'Your check-in request has been sent.', type: 'success' });
-            fetchHistoryAndSettings();
+            showMessage('Your check-in request has been sent.', 'success');
+            fetchHistoryAndSettings(); // Refresh data after successful check-in
         } catch (error) {
-            setMessage({ text: error.response?.data?.message || 'Check-in failed.', type: 'error' });
+            const msg = error.response?.data?.message || 'Check-in failed. Please check your network.';
+            showMessage(msg, 'error');
         }
-        setTimeout(() => setMessage({ text: '', type: '' }), 5000); 
     };
 
     const filteredHistory = useMemo(() => {
         setDateRangeMessage('');
         if (!startDate || !endDate) return history;
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        const today = new Date();
-        today.setHours(23, 59, 59, 999);
+        const start = new Date(startDate); start.setHours(0,0,0,0);
+        const end = new Date(endDate); end.setHours(23, 59, 59, 999);
+        const today = new Date(); today.setHours(23, 59, 59, 999);
+
         if (userLoginDate && start < userLoginDate) {
             setDateRangeMessage("You can't select a date before you joined.");
             return [];
@@ -167,28 +170,110 @@ const AttendancePage = () => {
             setDateRangeMessage("Start date cannot be in the future.");
             return [];
         }
-        end.setHours(23, 59, 59, 999);
+        if (end < start) {
+             setDateRangeMessage("End date cannot be before start date.");
+             return [];
+        }
+
         return history.filter(item => {
             const itemDate = new Date(item.date);
-            return itemDate >= start && itemDate <= end;
+            // Adjust itemDate for comparison if it's a multi-day leave record start date
+            const effectiveDate = item.type === 'Leave' ? new Date(item.date) : itemDate;
+            effectiveDate.setHours(0,0,0,0); // Ensure comparison is date-only
+
+            // Also check leave end date if applicable
+            const leaveEndDate = item.type === 'Leave' && item.leaveEndDate ? new Date(item.leaveEndDate) : null;
+            if (leaveEndDate) leaveEndDate.setHours(23,59,59,999);
+
+            // Check if the record's date OR its leave range overlaps with the filter range
+            const overlaps = (effectiveDate >= start && effectiveDate <= end) ||
+                             (leaveEndDate && leaveEndDate >= start && effectiveDate <= end);
+
+            return overlaps;
         });
     }, [history, startDate, endDate, userLoginDate]);
 
+
     const filteredSummaryHistory = useMemo(() => {
         if (!summaryStartDate || !summaryEndDate) return history;
-        const start = new Date(summaryStartDate);
-        const end = new Date(summaryEndDate);
-        end.setHours(23, 59, 59, 999);
+        const start = new Date(summaryStartDate); start.setHours(0,0,0,0);
+        const end = new Date(summaryEndDate); end.setHours(23, 59, 59, 999);
+         if (end < start) {
+             // Optionally show a message for summary range too
+             return [];
+         }
         return history.filter(item => {
-            const itemDate = new Date(item.date);
-            return itemDate >= start && itemDate <= end;
+             const itemDate = new Date(item.date);
+             const effectiveDate = item.type === 'Leave' ? new Date(item.date) : itemDate;
+             effectiveDate.setHours(0,0,0,0);
+             const leaveEndDate = item.type === 'Leave' && item.leaveEndDate ? new Date(item.leaveEndDate) : null;
+             if (leaveEndDate) leaveEndDate.setHours(23,59,59,999);
+
+             const overlaps = (effectiveDate >= start && effectiveDate <= end) ||
+                              (leaveEndDate && leaveEndDate >= start && effectiveDate <= end);
+            return overlaps;
         });
     }, [history, summaryStartDate, summaryEndDate]);
 
-    const handleDownload = (type) => {
-        // ... (No changes to this function)
+    // --- ⭐⭐ PDF DOWNLOAD FIX START ⭐⭐ ---
+    const checkPdfLibrary = () => {
+        // Check if window.jspdf exists, then check if jsPDF constructor exists,
+        // then check if autoTable function exists on the jsPDF prototype
+        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined' || typeof window.jspdf.jsPDF.API.autoTable !== 'function') {
+            console.error("jsPDF or jsPDF-AutoTable library is not loaded correctly.");
+            showMessage("Could not generate PDF. Library missing or corrupted.", "error");
+            return false;
+        }
+        return true;
     };
-    
+
+    const handleDownload = (type) => {
+        if (!checkPdfLibrary()) return; // Check libraries first
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const user = JSON.parse(localStorage.getItem('user'));
+        const dataToExport = type === 'summary' ? filteredSummaryHistory : filteredHistory;
+        const title = type === 'summary' ? "Attendance Summary Report" : "Check-in History Report";
+        const filename = type === 'summary' ? "attendance_summary.pdf" : "checkin_history.pdf";
+        const dateFilterText = type === 'summary'
+            ? (summaryStartDate && summaryEndDate ? `Period: ${summaryStartDate} to ${summaryEndDate}` : '')
+            : (startDate && endDate ? `Period: ${startDate} to ${endDate}` : '');
+
+
+        try { // Wrap PDF generation in try...catch
+            doc.setFontSize(18);
+            doc.text(title, 14, 22);
+            doc.setFontSize(12);
+            doc.text(`Student: ${user.name}`, 14, 32);
+            if (dateFilterText) {
+                doc.text(dateFilterText, 14, 42);
+            }
+
+            doc.autoTable({ // Use doc.autoTable directly
+                startY: 50,
+                head: [['Date', 'Type', 'Check-in Time', 'Status', 'Reason']],
+                body: dataToExport.map(item => [
+                    new Date(item.date).toLocaleDateString('en-GB'),
+                    item.type,
+                    item.type === 'Check-in' ? new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-',
+                    item.status + (item.wasLate ? ' (Late)' : ''), // Combine status and late indication
+                    item.reason
+                ]),
+                theme: 'striped',
+                headStyles: { fillColor: [30, 41, 59] } // Dark blue header
+            });
+            doc.save(filename);
+            showMessage("Report downloaded successfully!", "success");
+
+        } catch (error) {
+            console.error("PDF Generation Error:", error);
+            showMessage("Failed to generate PDF content.", "error");
+        }
+    };
+    // --- ⭐⭐ PDF DOWNLOAD FIX END ⭐⭐ ---
+
+
     const clearDateFilter = (type) => {
         if (type === 'checkin') {
             setStartDate('');
@@ -198,11 +283,13 @@ const AttendancePage = () => {
             setSummaryEndDate('');
         }
     };
-    
+
     const getStatusChip = (item) => {
-        const { status, type } = item;
-        const baseStyle = { padding: '4px 12px', borderRadius: '9999px', fontWeight: '600', fontSize: '0.8rem', textAlign: 'center' };
-        
+        const { status, type, wasLate } = item; // Added wasLate
+        const baseStyle = { padding: '4px 12px', borderRadius: '9999px', fontWeight: '600', fontSize: '0.8rem', textAlign: 'center', display: 'inline-flex', alignItems: 'center', gap: '4px' };
+        const lateIndicator = <span style={{ backgroundColor: '#DC2626', color: 'white', borderRadius: '50%', width: '16px', height: '16px', fontSize: '10px', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>L</span>;
+
+
         if (type === 'Leave') {
             switch (status) {
                 case 'Approved': return <span style={{ ...baseStyle, background: '#D1FAE5', color: '#065F46' }}>Approved</span>;
@@ -212,15 +299,17 @@ const AttendancePage = () => {
             }
         } else { // type === 'Check-in'
              switch (status) {
-                case 'Present': return <span style={{ ...baseStyle, background: '#D1FAE5', color: '#065F46' }}>Present</span>;
-                case 'Absent': return <span style={{ ...baseStyle, background: '#FEE2E2', color: '#991B1B' }}>Absent</span>;
-                case 'Late': return <span style={{ ...baseStyle, background: '#FEF3C7', color: '#92400E' }}>Late</span>;
+                // Show late indicator next to Present/Absent if wasLate is true
+                case 'Present': return <span style={{ ...baseStyle, background: '#D1FAE5', color: '#065F46' }}>Present {wasLate && lateIndicator}</span>;
+                case 'Absent': return <span style={{ ...baseStyle, background: '#FEE2E2', color: '#991B1B' }}>Absent {wasLate && lateIndicator}</span>;
+                case 'Late': return <span style={{ ...baseStyle, background: '#FEF3C7', color: '#92400E' }}>Late</span>; // Keep Late status distinct if needed
                 case 'Pending': return <span style={{ ...baseStyle, background: '#E5E7EB', color: '#374151' }}>Pending</span>;
                 default: return <span style={{ ...baseStyle, background: '#E5E7EB', color: '#374151' }}>{status}</span>;
             }
         }
     };
-    
+
+
     const DateRangeMessageComponent = ({ message }) => (
         <div className="date-range-message-container">
             <AlertTriangleIcon />
@@ -228,7 +317,7 @@ const AttendancePage = () => {
             <p>{message}</p>
         </div>
     );
-    
+
     const NoResultsComponent = ({ message }) => (
         <div className="no-results-container">
             <NoResultsIcon />
@@ -238,7 +327,8 @@ const AttendancePage = () => {
     );
 
     return (
-        <div>
+        <div className="attendance-page">
+            {/* Styles remain unchanged */}
             <style>{`
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                 .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
@@ -259,7 +349,7 @@ const AttendancePage = () => {
                 .clear-date-btn { background: none; border: none; cursor: pointer; color: var(--light-text); padding: 0.5rem; display: flex; align-items: center; justify-content: center; }
                 .clear-date-btn:hover { color: var(--dark-text); }
                 .download-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background-color: var(--white); font-weight: 600; cursor: pointer; }
-                .table-wrapper { min-height: 150px; max-height: 300px; overflow-y: auto; }
+                .table-wrapper { min-height: 150px; }
                 .attendance-table { width: 100%; border-collapse: collapse; }
                 .attendance-table th, .attendance-table td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
                 .attendance-table thead { position: sticky; top: 0; background: #F8FAFC; z-index: 1; }
@@ -267,17 +357,19 @@ const AttendancePage = () => {
                 .date-range-message-container, .no-results-container { text-align: center; padding: 3rem 1rem; border: 2px dashed var(--border-color); border-radius: 1rem; color: var(--light-text); }
                 .date-range-message-container h3, .no-results-container h3 { margin-top: 1rem; margin-bottom: 0.5rem; color: var(--dark-text); }
                 .date-range-message-container p, .no-results-container p { margin: 0; max-width: 400px; margin-left: auto; margin-right: auto; }
+                .card-list-scrollable { /* Styles applied via responsive.css */ }
             `}</style>
+
             <div className="card fade-in-up">
-                <div className="card-header">
+                 <div className="card-header">
                     <h3>Check-in Requests</h3>
                     <div className="header-actions">
                         <div className="date-filters">
                             <CalendarIcon />
                             <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                             <span>to</span>
-                            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                            {(startDate || endDate) && <button className="clear-date-btn" onClick={() => clearDateFilter('checkin')}><XIcon /></button>}
+                            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} min={startDate} />
+                             {(startDate || endDate) && <button className="clear-date-btn" onClick={() => clearDateFilter('checkin')}><XIcon /></button>}
                         </div>
                         <div className="checkin-container">
                              <button className="checkin-btn" onClick={handleCheckIn} disabled={!isWindowOpen || isCheckedInToday || isOnApprovedLeave}>
@@ -291,76 +383,87 @@ const AttendancePage = () => {
                     </div>
                 </div>
 
-                {message.text && <div className={`status-message ${message.type}`}>{message.text}</div>}
-                
-                {isLoading ? <p>Loading history...</p> : 
+                {message.text && <div className={`status-message ${message.type === 'error' ? 'error' : 'success'}`}>{message.text}</div>}
+
+                {isLoading ? <p style={{ padding: '2rem', textAlign: 'center' }}>Loading history...</p> :
                     dateRangeMessage ? <DateRangeMessageComponent message={dateRangeMessage} /> : (
                         <div className="table-wrapper">
-                            {filteredHistory.length > 0 ? (
-                                <table className="attendance-table">
-                                    <thead>
-                                        <tr><th>Request ID</th><th>Date</th><th>Type</th><th>Reason</th><th>Status</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredHistory.map(item => (
-                                            <tr key={item._id}>
-                                                <td>{item._id.slice(-6).toUpperCase()}</td>
-                                                <td>{new Date(item.date).toLocaleDateString('en-GB')}</td>
-                                                <td>{item.type}</td>
-                                                <td>{item.reason}</td>
-                                                <td>{getStatusChip(item)}</td>
+                            <div className="card-list-scrollable">
+                                {filteredHistory.length > 0 ? (
+                                    <table className="attendance-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Request ID</th>
+                                                <th>Date</th>
+                                                <th>Type</th>
+                                                <th>Reason</th>
+                                                <th>Status</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <NoResultsComponent message="No check-in requests found." />
-                            )}
+                                        </thead>
+                                        <tbody>
+                                            {filteredHistory.map(item => (
+                                                <tr key={item._id}>
+                                                    <td data-label="Request ID">{item._id.slice(-6).toUpperCase()}</td>
+                                                    <td data-label="Date">{new Date(item.date).toLocaleDateString('en-GB')}</td>
+                                                    <td data-label="Type">{item.type}</td>
+                                                    <td data-label="Reason">{item.reason}</td>
+                                                    <td data-label="Status">{getStatusChip(item)}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <NoResultsComponent message="No check-in requests found for the selected period." />
+                                )}
+                            </div>
                         </div>
                      )
                 }
             </div>
 
             <div className="card fade-in-up" style={{ marginTop: '2rem' }}>
-                <div className="card-header">
+                 <div className="card-header">
                      <h3>Your Attendance Summary</h3>
                      <div className="header-actions">
                         <div className="date-filters">
                             <CalendarIcon />
                             <input type="date" value={summaryStartDate} onChange={(e) => setSummaryStartDate(e.target.value)} />
                             <span>to</span>
-                            <input type="date" value={summaryEndDate} onChange={(e) => setSummaryEndDate(e.target.value)} />
-                            {(summaryStartDate || summaryEndDate) && <button className="clear-date-btn" onClick={() => clearDateFilter('summary')}><XIcon /></button>}
+                            <input type="date" value={summaryEndDate} onChange={(e) => setSummaryEndDate(e.target.value)} min={summaryStartDate} />
+                             {(summaryStartDate || summaryEndDate) && <button className="clear-date-btn" onClick={() => clearDateFilter('summary')}><XIcon /></button>}
                         </div>
-                        <button className="download-btn" onClick={() => handleDownload('summary')}><DownloadIcon /> Download Summary</button>
+                        <button className="download-btn" onClick={() => handleDownload('summary')} disabled={filteredSummaryHistory.length === 0}>
+                            <DownloadIcon /> Download Summary
+                        </button>
                     </div>
                 </div>
-
                 <div className="table-wrapper">
-                    {isLoading ? <p>Loading summary...</p> : filteredSummaryHistory.length > 0 ? (
-                        <table className="attendance-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Check-in Time</th>
-                                    <th>Status</th>
-                                    <th>Reason</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredSummaryHistory.map(item => (
-                                    <tr key={item._id}>
-                                        <td>{new Date(item.date).toLocaleDateString('en-GB')}</td>
-                                        <td>{item.type === 'Check-in' ? new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-'}</td>
-                                        <td>{getStatusChip(item)}</td>
-                                        <td>{item.reason}</td>
+                     <div className="card-list-scrollable">
+                        {isLoading ? <p style={{ padding: '2rem', textAlign: 'center' }}>Loading summary...</p> : filteredSummaryHistory.length > 0 ? (
+                            <table className="attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Check-in Time</th>
+                                        <th>Status</th>
+                                        <th>Reason</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    ) : (
-                       <NoResultsComponent message="You do not have any attendance records yet." />
-                    )}
+                                </thead>
+                                <tbody>
+                                    {filteredSummaryHistory.map(item => (
+                                        <tr key={item._id}>
+                                            <td data-label="Date">{new Date(item.date).toLocaleDateString('en-GB')}</td>
+                                            <td data-label="Check-in Time">{item.type === 'Check-in' ? new Date(item.date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) : '-'}</td>
+                                            <td data-label="Status">{getStatusChip(item)}</td>
+                                            <td data-label="Reason">{item.reason}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                           <NoResultsComponent message="You do not have any attendance records yet." />
+                        )}
+                    </div>
                 </div>
             </div>
 

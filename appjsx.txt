@@ -1,80 +1,83 @@
 attendance-management-system/
 │
-├── client/                     (Frontend - React + Vite)
-│   ├── node_modules/         (Frontend dependencies)
-│   ├── public/
-│   │   └── favicon.ico       (Static assets)
-│   ├── src/
-│   │   ├── assets/
-│   │   │   ├── react.svg
-│   │   │   └── skenetic-logo.jpg
-│   │   ├── components/
-│   │   │   ├── LoginSplineAnimation.jsx
-│   │   │   └── SplineAnimation.jsx
-│   │   ├── pages/
-│   │   │   ├── admin/
-│   │   │   │   ├── AdminInfoPage.jsx
-│   │   │   │   ├── AdminSettingsPage.jsx
-│   │   │   │   ├── AttendanceReportsPage.jsx
-│   │   │   │   ├── AttendanceRequestsPage.jsx
-│   │   │   │   ├── DashboardContent.jsx
-│   │   │   │   ├── LateAttendancePage.jsx
-│   │   │   │   ├── LeaveRequestsAdminPage.jsx
-│   │   │   │   └── StudentsPage.jsx
-│   │   │   └── student/
-│   │   │       ├── AttendancePage.jsx
-│   │   │       ├── InfoPage.jsx
-│   │   │       ├── LateAttendancePage.jsx
-│   │   │       ├── LeaveRequestPage.jsx
-│   │   │       ├── ProfilePage.jsx
-│   │   │       ├── SettingsPage.jsx
-│   │   │       ├── StudentDashboardContent.jsx
-│   │   │       └── SurveyPage.jsx
-│   │   ├── Admin.jsx         (Admin layout/wrapper)
-│   │   ├── App.jsx           (Main App component & routes)
-│   │   ├── main.jsx          (React DOM render - entry)
-│   │   └── User.jsx          (Student layout/wrapper)
-│   ├── .gitignore            (Client-specific gitignore)
-│   ├── index.html            (Vite's HTML entry point)
-│   ├── package.json          (Frontend 'package.json')
-│   ├── package-lock.json
-│   ├── README.md
-│   └── vite.config.js
+├── client/                                     # Frontend (React/Vite)
+│   ├── public/
+│   │   ├── icons/                              # PWA Icons & Shortcuts (manifest.json la irukuradhu)
+│   │   ├── favicon.ico
+│   │   ├── manifest.json                       # PWA Web App Manifest (NEW)
+│   │   └── service-worker.js                   # Workbox Service Worker (NEW)
+│   ├── src/
+│   │   ├── assets/
+│   │   │   ├── react.svg
+│   │   │   └── skenetic-logo.jpg
+│   │   ├── components/
+│   │   │   ├── LoginSplineAnimation.jsx        # 3D Animation for Login
+│   │   │   └── SplineAnimation.jsx             # Reusable 3D Animation
+│   │   ├── pages/
+│   │   │   ├── admin/
+│   │   │   │   ├── AdminInfoPage.jsx
+│   │   │   │   ├── AdminSettingsPage.jsx
+│   │   │   │   ├── AttendanceReportsPage.jsx
+│   │   │   │   ├── AttendanceRequestsPage.jsx
+│   │   │   │   ├── DashboardContent.jsx
+│   │   │   │   ├── LateAttendancePage.jsx
+│   │   │   │   ├── LeaveRequestsAdminPage.jsx
+│   │   │   │   ├── StudentsPage.jsx
+│   │   │   │   └── VerificationPage.jsx        # Token Management UI (NEW)
+│   │   │   └── student/
+│   │   │       ├── AttendancePage.jsx
+│   │   │       ├── InfoPage.jsx
+│   │   │       ├── LateAttendancePage.jsx
+│   │   │       ├── LeaveRequestPage.jsx
+│   │   │       ├── ProfilePage.jsx
+│   │   │       └── SettingsPage.jsx
+│   │   │       └── SurveyPage.jsx             # First-time user survey
+│   │   ├── Admin.jsx                           # Admin Layout/Routing
+│   │   ├── App.jsx                             # Main Routing & Login Logic (PWA Install Logic)
+│   │   ├── main.jsx                            # React Entry Point & Service Worker Registration (NEW)
+│   │   ├── responsive.css                      # Global Mobile/Student Responsive Styles
+│   │   ├── adminresponsive.css                 # Admin Mobile Responsive Styles (NEW)
+│   │   └── User.jsx                            # Student Layout/Routing (Survey Check)
+│   ├── .gitignore
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
 │
-├── config/                   (Backend - Configuration)
-│   └── db.js                 (MongoDB connection logic)
+├── config/
+│   └── db.js                                   # MongoDB Connection & Admin Creation Logic
 │
-├── controllers/              (Backend - Business Logic)
-│   ├── attendanceController.js
-│   ├── informationController.js
-│   ├── settingsController.js
-│   └── userController.js
+├── controllers/
+│   ├── attendanceController.js
+│   ├── informationController.js
+│   ├── settingsController.js
+│   ├── userController.js
+│   └── verificationController.js               # Token Generation Logic (NEW)
 │
-├── middleware/               (Backend - e.g., token check)
-│   ├── authMiddleware.js
-│   └── validationMiddleware.js
+├── middleware/
+│   ├── authMiddleware.js                       # JWT Protect & Admin Role Check
+│   └── validationMiddleware.js                 # Input Validation (Token Check Added)
 │
-├── models/                   (Backend - MongoDB Schemas)
-│   ├── attendanceModel.js
-│   ├── informationModel.js
-│   ├── settingsModel.js
-│   └── userModel.js
+├── models/
+│   ├── attendanceModel.js
+│   ├── informationModel.js
+│   ├── settingsModel.js
+│   ├── userModel.js
+│   └── verificationTokenModel.js               # Token Schema (NEW)
 │
-├── routes/                   (Backend - API Endpoints)
-│   ├── attendanceRoutes.js
-│   ├── informationRoutes.js
-│   ├── settingsRoutes.js
-│   └── userRoutes.js
+├── routes/
+│   ├── attendanceRoutes.js
+│   ├── informationRoutes.js
+│   ├── settingsRoutes.js
+│   ├── userRoutes.js
+│   └── verificationRoutes.js                   # Token API Endpoints (NEW)
 │
-├── utils/                    (Backend - e.g., email service)
-│   ├── emailTemplates.js
-│   └── sendEmail.js
+├── utils/
+│   ├── emailTemplates.js                       # HTML Email Templates (Profile Update Added)
+│   └── sendEmail.js                            # Nodemailer Configuration
 │
-├── node_modules/             (Backend dependencies)
-│
-├── .env                      (Backend secrets - DB string, JWT secret, etc.)
-├── .gitignore                (Main project gitignore)
-├── app.js                    (Express app setup, middleware, routes)
-├── package.json              (Backend 'package.json')
-├── package-lock.json
-└── server.js                 (Server entry point - Connects to DB & starts server)
+├── node_modules/
+├── .env
+├── .gitignore
+├── app.js                                      # Express App Setup
+├── package.json
+└── server.js                                   # Server Entry Point & Cron Jobs Setup

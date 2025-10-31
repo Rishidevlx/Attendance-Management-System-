@@ -2,17 +2,19 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 
 // --- ICONS ---
+// Keep all icon components as they are...
 const CheckInIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>);
 const AttendanceIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>);
 const LateIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>);
 const LeaveIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>);
 const ProfileIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>);
 const InfoIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>);
-const SettingsIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>);
+const SettingsIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82-.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>);
 const ChevronLeftIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>;
 const ChevronRightIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>;
 
 const StudentDashboardContent = ({ user, onNavigate }) => {
+    // Keep all state variables as they are...
     const [history, setHistory] = useState([]);
     const [timeSettings, setTimeSettings] = useState(null);
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -23,7 +25,8 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
     const [message, setMessage] = useState({ text: '', type: '' });
     const [currentDate, setCurrentDate] = useState(new Date());
 
-    const getAuthConfig = () => {
+    // Keep all functions (getAuthConfig, fetchDashboardData, etc.) as they are...
+     const getAuthConfig = () => {
         const token = JSON.parse(localStorage.getItem('user'))?.token;
         return { headers: { Authorization: `Bearer ${token}` } };
     };
@@ -103,7 +106,7 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
         seconds = Math.floor((diff % (1000 * 60)) / 1000);
         setCountdown(`${text} ${hours}h ${minutes}m ${seconds}s`);
     }, [currentTime, timeSettings]);
-    
+
     const showMessage = (text, type) => {
         setMessage({ text, type });
         setTimeout(() => setMessage({ text: '', type: '' }), 4000);
@@ -118,7 +121,7 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
             showMessage(error.response?.data?.message || 'Check-in failed.', 'error');
         }
     };
-    
+
     const attendanceStats = useMemo(() => {
         return history.reduce((acc, record) => {
             if (record.type === 'Check-in') {
@@ -131,7 +134,7 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
             return acc;
         }, { present: 0, absent: 0, late: 0, leave: 0 });
     }, [history]);
-    
+
     const shortcutItems = [
         { name: 'Attendance', icon: <AttendanceIcon />, page: 'Attendance' },
         { name: 'Late History', icon: <LateIcon />, page: 'Late Attendance' },
@@ -141,8 +144,8 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
         { name: 'Settings', icon: <SettingsIcon />, page: 'Settings' }
     ];
 
-    // --- Calendar Logic ---
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    // Keep Calendar Logic as it is...
+     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
@@ -154,7 +157,7 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
         for (const record of history) {
             const recordDate = new Date(record.date);
             recordDate.setHours(0,0,0,0);
-            
+
             if (record.type === 'Leave' && record.status === 'Approved') {
                  const leaveEndDate = new Date(record.leaveEndDate);
                  leaveEndDate.setHours(0,0,0,0);
@@ -178,6 +181,7 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
 
     return (
         <div>
+            {/* Styles remain the same */}
             <style>{`
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                 @keyframes pulse-border {
@@ -194,13 +198,13 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
                 .profile-summary img { width: 50px; height: 50px; border-radius: 50%; }
                 .profile-info h3 { margin: 0; font-size: 1.1rem; }
                 .profile-info p { margin: 0.25rem 0 0; font-size: 0.9rem; color: #94A3B8; }
-                
+
                 .quick-checkin-card { background: var(--white); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
                 .checkin-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background-color: var(--brand-blue); color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
                 .checkin-btn:hover:not(:disabled) { background-color: #003ECC; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 82, 255, 0.2); }
                 .checkin-btn.available-pulse { animation: pulse-border 2s infinite; }
                 .checkin-btn:disabled { background-color: #94A3B8; cursor: not-allowed; }
-                
+
                 .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
                 .shortcuts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
                 .shortcut-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--white); border: 1px solid var(--border-color); border-radius: 1rem; padding: 2rem 1rem; text-align: center; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
@@ -209,16 +213,17 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
 
                 .main-dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
                 @media (min-width: 1024px) { .main-dashboard-grid { grid-template-columns: 350px 1fr; } }
-                
-                .stats-container .card { 
-                    display: flex; 
-                    align-items: center; 
-                    gap: 1.5rem; 
-                    margin-bottom: 1.5rem; 
-                    background: var(--white); 
-                    border-left: 5px solid; 
-                    border-radius: 1rem; 
-                    padding: 1.5rem; 
+
+                /* --- NO CHANGES NEEDED HERE FOR MOBILE GRID, CSS HANDLES IT --- */
+                .stats-container .card {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+                    /* --- REMOVED margin-bottom: 1.5rem; --- */
+                    background: var(--white);
+                    border-left: 5px solid;
+                    border-radius: 1rem;
+                    padding: 1.5rem;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.03);
                     transition: all 0.3s ease;
                 }
@@ -231,13 +236,13 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
                 .stats-container .card.late { border-color: #FBBF24; }
                 .stats-container .card.leave { border-color: #8B5CF6; }
 
-                .stats-container .icon-wrapper { 
-                    width: 50px; 
-                    height: 50px; 
-                    border-radius: 50%; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
+                .stats-container .icon-wrapper {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     background-color: #F8FAFC;
                 }
                 .stats-container .icon-wrapper.present { color: #22C55E; }
@@ -247,7 +252,9 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
 
                 .stats-container h4 { margin: 0; font-size: 1.5rem; font-weight: 700; }
                 .stats-container p { margin: 0.25rem 0 0; color: var(--light-text); }
-                
+                /* --- END OF STATS CONTAINER STYLES --- */
+
+
                 .calendar-container { background: var(--white); border: 1px solid var(--border-color); border-radius: 1rem; padding: 2rem; }
                 .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
                 .calendar-header h3 { margin: 0; font-size: 1.25rem; }
@@ -268,9 +275,10 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
             `}</style>
 
             {message.text && <div className={`message-box ${message.type === 'error' ? 'error-message-box' : 'success-message-box'}`}>{message.text}</div>}
-            
+
             <div className="welcome-banner fade-in-up">
-                <div className="welcome-text">
+                 {/* Welcome Banner content */}
+                 <div className="welcome-text">
                     <h1>Welcome Back, {user.name.split(' ')[0]}!</h1>
                     <p>Ready to make today productive? Let's get started.</p>
                 </div>
@@ -284,15 +292,16 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
             </div>
 
             <div className="quick-checkin-card fade-in-up" style={{ animationDelay: '100ms' }}>
-                <div>
+                 {/* Quick Checkin content */}
+                 <div>
                     <h4>Quick Check-in</h4>
                     <p style={{color: 'var(--light-text)', margin: 0, fontSize: '0.9rem'}}>
                         {isOnApprovedLeave ? "You are on approved leave today." : countdown}
                     </p>
                 </div>
-                <button 
-                    className={`checkin-btn ${isWindowOpen && !isCheckedInToday && !isOnApprovedLeave ? 'available-pulse' : ''}`} 
-                    onClick={handleCheckIn} 
+                <button
+                    className={`checkin-btn ${isWindowOpen && !isCheckedInToday && !isOnApprovedLeave ? 'available-pulse' : ''}`}
+                    onClick={handleCheckIn}
                     disabled={!isWindowOpen || isCheckedInToday || isOnApprovedLeave}
                 >
                     <CheckInIcon />
@@ -303,7 +312,8 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
             <div className="fade-in-up" style={{ animationDelay: '200ms' }}>
                 <h3 className="section-title">Quick Actions</h3>
                 <div className="shortcuts-grid">
-                    {shortcutItems.map((item, index) => (
+                    {/* Shortcut cards */}
+                     {shortcutItems.map((item, index) => (
                         <div key={item.name} className="shortcut-card" onClick={() => onNavigate(item.page)} style={{animationDelay: `${index * 50}ms`}}>
                             {item.icon}
                             <span>{item.name}</span>
@@ -312,16 +322,23 @@ const StudentDashboardContent = ({ user, onNavigate }) => {
                 </div>
             </div>
 
+            {/* --- JSX STRUCTURE FIX --- */}
             <div className="main-dashboard-grid">
-                <div className="stats-container fade-in-up" style={{ animationDelay: '300ms' }}>
+                 {/* Wrap both the heading and the grid container in a single div */}
+                <div className="fade-in-up" style={{ animationDelay: '300ms' }}>
                     <h3 className="section-title">Your Status</h3>
-                    <div className="card present"><div className="icon-wrapper present"><CheckInIcon /></div><div><h4>{attendanceStats.present}</h4><p>Days Present</p></div></div>
-                    <div className="card absent"><div className="icon-wrapper absent"><ProfileIcon/></div><div><h4>{attendanceStats.absent}</h4><p>Days Absent</p></div></div>
-                    <div className="card late"><div className="icon-wrapper late"><LateIcon/></div><div><h4>{attendanceStats.late}</h4><p>Days Late</p></div></div>
-                    <div className="card leave"><div className="icon-wrapper leave"><LeaveIcon/></div><div><h4>{attendanceStats.leave}</h4><p>Days On Leave</p></div></div>
+                    <div className="stats-container"> {/* Grid container starts AFTER the heading */}
+                        {/* Status Cards */}
+                        <div className="card present"><div className="icon-wrapper present"><CheckInIcon /></div><div><h4>{attendanceStats.present}</h4><p>Days Present</p></div></div>
+                        <div className="card absent"><div className="icon-wrapper absent"><ProfileIcon/></div><div><h4>{attendanceStats.absent}</h4><p>Days Absent</p></div></div>
+                        <div className="card late"><div className="icon-wrapper late"><LateIcon/></div><div><h4>{attendanceStats.late}</h4><p>Days Late</p></div></div>
+                        <div className="card leave"><div className="icon-wrapper leave"><LeaveIcon/></div><div><h4>{attendanceStats.leave}</h4><p>Days On Leave</p></div></div>
+                    </div>
                 </div>
-                
+                 {/* --- END JSX STRUCTURE FIX --- */}
+
                 <div className="calendar-container fade-in-up" style={{ animationDelay: '400ms' }}>
+                    {/* Calendar content */}
                     <div className="calendar-header">
                         <h3>{monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}</h3>
                         <div className="calendar-nav" style={{display: 'flex', gap: '0.5rem'}}>

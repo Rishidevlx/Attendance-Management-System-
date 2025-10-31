@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 
-// --- ICONS ---
+// --- ICONS ---\
 const SendIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>);
 const HistoryIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>);
 const CalendarIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>);
@@ -49,7 +49,7 @@ const LeaveRequestPage = () => {
         const token = JSON.parse(localStorage.getItem('user'))?.token;
         return { headers: { Authorization: `Bearer ${token}` } };
     };
-    
+
     const showMessage = (text, type) => {
         setMessage({ text, type });
         setTimeout(() => setMessage({ text: '', type: '' }), 5000);
@@ -57,11 +57,12 @@ const LeaveRequestPage = () => {
 
     const fetchHistory = async () => {
         try {
+            // Service Worker SWR Cache will be used for this GET request
             const { data } = await axios.get('/api/attendance/leave-history', getAuthConfig());
             setHistory(data);
         } catch (error) {
             console.error('Failed to fetch leave history', error);
-            showMessage('Could not load leave history.', 'error');
+            showMessage('Could not load leave history. Please check your connection.', 'error');
         } finally {
             setIsLoading(false);
         }
@@ -77,6 +78,7 @@ const LeaveRequestPage = () => {
             return showMessage('Please select a date and provide a reason.', 'error');
         }
         try {
+            // --- MODIFICATION: Standard Network Request. Service Worker uses NetworkOnly. ---
             await axios.post('/api/attendance/leave-request', { startDate, endDate: endDate || startDate, reason, duration }, getAuthConfig());
             showMessage('Leave request submitted successfully!', 'success');
             setStartDate('');
@@ -84,10 +86,12 @@ const LeaveRequestPage = () => {
             setReason('');
             fetchHistory(); // Refresh history after submission
         } catch (error) {
-            showMessage(error.response?.data?.message || 'Failed to submit leave request.', 'error');
+            // Standard error handling
+            const msg = error.response?.data?.message || 'Failed to submit leave request. Please check your network.';
+            showMessage(msg, 'error');
         }
     };
-    
+
     const getStatusChip = (status) => {
         const baseStyle = { padding: '4px 12px', borderRadius: '9999px', fontWeight: '600', fontSize: '0.8rem', textAlign: 'center' };
         switch (status) {
@@ -119,20 +123,20 @@ const LeaveRequestPage = () => {
                 .message-box { padding: 1rem; margin-bottom: 1.5rem; border-radius: 0.5rem; text-align: center; font-weight: 500; }
                 .error-message-box { background-color: #FEE2E2; color: #B91C1C; }
                 .success-message-box { background-color: #D1FAE5; color: #047857; }
-                .table-wrapper { min-height: 200px; max-height: 400px; overflow-y: auto; }
+                .table-wrapper { min-height: 200px; } /* Removed max-height */
                 .leave-table { width: 100%; border-collapse: collapse; }
-                .leave-table th, .leave-table td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+                .leave-table th, .leave-table td { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
                 .leave-table thead { position: sticky; top: 0; background: #F8FAFC; z-index: 1; }
                 .leave-table th { font-size: 0.8rem; text-transform: uppercase; color: var(--light-text); }
                 .no-results-container { text-align: center; padding: 3rem 1rem; color: var(--light-text); }
-                
-                /* --- NEW: Styles for the stat card --- */
                 .stat-card { display: flex; align-items: center; gap: 1rem; background-color: #F0F4F8; padding: 1.25rem; border-radius: 1rem; border: 1px solid var(--border-color); margin-bottom: 1.5rem; }
                 .stat-icon-wrapper { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); background-color: #8B5CF6; }
                 .stat-info h4 { margin: 0 0 0.25rem; color: var(--light-text); font-weight: 500; font-size: 0.9rem; }
                 .stat-info p { margin: 0; font-size: 1.75rem; font-weight: 700; color: var(--dark-text); }
+                /* Inner Scrollable div */
+                .card-list-scrollable { /* Styles applied via responsive.css */ }
             `}</style>
-            
+
             <div className="leave-grid">
                 <div className="card">
                     <div className="card-header">
@@ -166,7 +170,7 @@ const LeaveRequestPage = () => {
                         <h3>Your Leave History</h3>
                     </div>
 
-                    {/* --- NEW: Stat Card for Total Leave Days --- */}
+                    {/* Stat Card for Total Leave Days */}
                     <div className="stat-card">
                         <div className="stat-icon-wrapper"><LeaveStatIcon /></div>
                         <div className="stat-info">
@@ -175,31 +179,35 @@ const LeaveRequestPage = () => {
                         </div>
                     </div>
 
+                    {/* --- Wrap the table in the scrollable div --- */}
                     <div className="table-wrapper">
-                         {isLoading ? <p>Loading history...</p> : history.length > 0 ? (
-                            <table className="leave-table">
-                                <thead>
-                                    <tr><th>Start Date</th><th>End Date</th><th>Duration</th><th>Reason</th><th>Status</th></tr>
-                                </thead>
-                                <tbody>
-                                    {history.map(item => (
-                                        <tr key={item._id}>
-                                            <td>{new Date(item.date).toLocaleDateString('en-GB')}</td>
-                                            <td>{new Date(item.leaveEndDate).toLocaleDateString('en-GB')}</td>
-                                            <td>{item.leaveDuration} Day{item.leaveDuration > 1 ? 's' : ''}</td>
-                                            <td>{item.reason}</td>
-                                            <td>{getStatusChip(item.status)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <div className="no-results-container">
-                                <NoResultsIcon/>
-                                <p style={{marginTop: '1rem'}}>You haven't applied for any leaves yet.</p>
-                            </div>
-                        )}
+                         <div className="card-list-scrollable">
+                            {isLoading ? <p style={{ padding: '2rem', textAlign: 'center' }}>Loading history...</p> : history.length > 0 ? (
+                                <table className="leave-table">
+                                    <thead>
+                                        <tr><th>Start Date</th><th>End Date</th><th>Duration</th><th>Reason</th><th>Status</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        {history.map(item => (
+                                            <tr key={item._id}>
+                                                <td data-label="Start Date">{new Date(item.date).toLocaleDateString('en-GB')}</td>
+                                                <td data-label="End Date">{new Date(item.leaveEndDate).toLocaleDateString('en-GB')}</td>
+                                                <td data-label="Duration">{item.leaveDuration} Day{item.leaveDuration > 1 ? 's' : ''}</td>
+                                                <td data-label="Reason">{item.reason}</td>
+                                                <td data-label="Status">{getStatusChip(item.status)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className="no-results-container">
+                                    <NoResultsIcon/>
+                                    <p style={{marginTop: '1rem'}}>You haven't applied for any leaves yet.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
+                    {/* --- End wrapper --- */}
                 </div>
             </div>
         </div>
@@ -207,4 +215,3 @@ const LeaveRequestPage = () => {
 };
 
 export default LeaveRequestPage;
-

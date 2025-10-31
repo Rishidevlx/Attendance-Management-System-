@@ -23,7 +23,7 @@ const ProfilePage = ({ user }) => {
                 const token = JSON.parse(localStorage.getItem('user'))?.token;
                 if (!token) throw new Error("No auth token found");
                 const config = { headers: { Authorization: `Bearer ${token}` } };
-                
+
                 const { data: history } = await axios.get('/api/attendance/history', config);
 
                 const calculatedStats = history.reduce((acc, record) => {
@@ -56,14 +56,15 @@ const ProfilePage = ({ user }) => {
         fetchAttendanceStats();
     }, [user]);
 
-    const profileImageUrl = `https://placehold.co/400x400/E2E8F0/475569?text=${user.name.charAt(0)}`;
-    
+    const profileImageUrl = `https://ik.imagekit.io/6dxwsh8nl/Attendance%20Folder/pfp.jpg?updatedAt=1761719770097`;
+
     return (
-        <div>
+        // --- ADD profile-page class ---
+        <div className="profile-page">
             <style>{`
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                 .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
-                
+
                 .profile-grid {
                     display: grid;
                     grid-template-columns: 1fr;
@@ -122,9 +123,18 @@ const ProfilePage = ({ user }) => {
 
                 .details-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                    gap: 1.5rem;
+                    /* --- RESPONSIVE FIX: Default to 1 column --- */
+                    grid-template-columns: 1fr;
+                    gap: 1rem; /* Reduced gap */
                 }
+                 /* --- RESPONSIVE FIX: Apply 2 columns only on larger screens --- */
+                @media (min-width: 768px) {
+                     .details-grid {
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 1.5rem;
+                     }
+                }
+
                 .detail-item {
                     background-color: #F8FAFC;
                     border: 1px solid var(--border-color);
@@ -136,30 +146,61 @@ const ProfilePage = ({ user }) => {
                 }
                 .detail-item .icon {
                     color: var(--brand-blue);
+                    flex-shrink: 0; /* Prevent icon shrinking */
+                }
+                .detail-item-content {
+                    overflow: hidden; /* Prevent text overflow */
                 }
                 .detail-item-content label {
                     display: block;
                     font-size: 0.8rem;
                     color: var(--light-text);
                     margin-bottom: 0.25rem;
+                    white-space: nowrap;
                 }
                 .detail-item-content span {
                     font-weight: 500;
                     color: var(--dark-text);
+                    display: block; /* Ensure span takes full width */
+                    white-space: nowrap; /* Prevent wrapping initially */
+                    overflow: hidden; /* Hide overflow */
+                    text-overflow: ellipsis; /* Add ellipsis */
                 }
+                 /* Allow wrapping on very small screens if needed */
+                @media (max-width: 400px) {
+                    .detail-item-content span {
+                        white-space: normal;
+                    }
+                }
+
 
                 .stats-grid {
                     display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 1.5rem;
+                     /* --- RESPONSIVE FIX: Default to 1 column --- */
+                    grid-template-columns: 1fr;
+                    gap: 1rem; /* Reduced gap */
                     margin-top: 2rem;
                 }
+                 /* --- RESPONSIVE FIX: Apply 2 columns for medium, 3 for large --- */
+                 @media (min-width: 576px) {
+                    .stats-grid {
+                       grid-template-columns: repeat(2, 1fr);
+                       gap: 1.5rem;
+                    }
+                 }
+                 @media (min-width: 992px) {
+                     .stats-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                     }
+                 }
+
+
                 .stat-card {
                     display: flex;
                     align-items: center;
-                    gap: 1.5rem;
+                    gap: 1rem; /* Reduced gap */
                     background-color: var(--white);
-                    padding: 1.5rem;
+                    padding: 1rem; /* Reduced padding */
                     border-radius: 1rem;
                     border: 1px solid var(--border-color);
                     transition: all 0.3s ease;
@@ -169,19 +210,26 @@ const ProfilePage = ({ user }) => {
                     box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08);
                 }
                 .stat-icon-wrapper {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
+                    width: 48px; /* Reduced size */
+                    height: 48px; /* Reduced size */
+                    border-radius: 0.75rem; /* Match card radius slightly */
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     color: var(--white);
+                    flex-shrink: 0;
                 }
+                 /* Make icons inside smaller */
+                .stat-icon-wrapper svg {
+                    width: 24px;
+                    height: 24px;
+                }
+
                 .stat-icon-wrapper.green { background-color: #22C55E; }
                 .stat-icon-wrapper.red { background-color: #EF4444; }
                 .stat-icon-wrapper.yellow { background-color: #FBBF24; }
-                .stat-info h4 { margin: 0 0 0.25rem; color: var(--light-text); font-weight: 500; font-size: 0.9rem; }
-                .stat-info p { margin: 0; font-size: 2rem; font-weight: 700; color: var(--dark-text); }
+                .stat-info h4 { margin: 0 0 0.25rem; color: var(--light-text); font-weight: 500; font-size: 0.8rem; } /* Reduced font size */
+                .stat-info p { margin: 0; font-size: 1.75rem; font-weight: 700; color: var(--dark-text); } /* Reduced font size */
             `}</style>
 
             <div className="profile-grid">
@@ -204,7 +252,7 @@ const ProfilePage = ({ user }) => {
                             <DetailItem icon={<BirthdayIcon />} label="Age" value={user.age || 'Not Provided'} />
                         </div>
                     </div>
-                    
+
                     <div className="fade-in-up" style={{ animationDelay: '300ms', marginTop: '2.5rem' }}>
                          <h3 className="section-title">Attendance Summary</h3>
                          {isLoading ? <p>Calculating stats...</p> : (
@@ -244,4 +292,3 @@ const StatCard = ({ title, value, icon, color }) => (
 );
 
 export default ProfilePage;
-

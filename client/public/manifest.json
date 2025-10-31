@@ -1,0 +1,53 @@
+{
+  "name": "Skenetic Attendance Manager",
+  "short_name": "SK Attendance",
+  "description": "Progressive Web App for managing student attendance and data.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0052FF",
+  "icons": [
+    {
+      "src": "/icons/skenetic-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/skenetic-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/skenetic-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check-in",
+      "short_name": "Check-in",
+      "description": "Mark attendance quickly.",
+      "url": "/?page=attendance",
+      "icons": [{ "src": "/icons/shortcut-checkin.png", "sizes": "96x96" }]
+    },
+     {
+      "name": "Requests",
+      "short_name": "Requests",
+      "description": "View pending attendance and leave requests.",
+      "url": "/?page=login",
+      "icons": [{ "src": "/icons/shortcut-requests.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icons/skenetic-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Login Screen"
+    }
+  ]
+}

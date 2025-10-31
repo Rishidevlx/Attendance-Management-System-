@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// --- MODIFICATION: Only import GoogleLogin component ---
 import { GoogleLogin } from '@react-oauth/google';
+// --- Ensure jwt-decode is installed: npm install jwt-decode ---
+import { jwtDecode } from "jwt-decode";
+
 
 // Importing Components from other files
 import AdminDashboard from './Admin.jsx';
@@ -9,11 +11,14 @@ import StudentPlatform from './User.jsx';
 
 // Importing assets and local components
 import skeneticLogo from './assets/skenetic-logo.jpg';
+// --- Removed LoginSplineAnimation import ---
+// import LoginSplineAnimation from './components/LoginSplineAnimation.jsx';
+// --- Used for HomePage only now ---
 import SplineAnimation from './components/SplineAnimation.jsx';
+
 
 // --- Hooks ---
 const useTypingEffect = (text, speed = 100) => {
-    // ... (no changes)
     const [displayedText, setDisplayedText] = useState('');
     useEffect(() => {
         setDisplayedText('');
@@ -32,7 +37,6 @@ const useTypingEffect = (text, speed = 100) => {
 };
 
 const useRepeatingTypingEffect = (words, typeSpeed = 150, eraseSpeed = 100, delay = 2000) => {
-    // ... (no changes)
      const [text, setText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
     const [loopNum, setLoopNum] = useState(0);
@@ -42,11 +46,13 @@ const useRepeatingTypingEffect = (words, typeSpeed = 150, eraseSpeed = 100, dela
             const i = loopNum % words.length;
             const fullText = words[i];
 
-            setText(current =>
+             // --- Corrected ternary operator ---
+             setText(current =>
                 isDeleting
                     ? fullText.substring(0, current.length - 1)
                     : fullText.substring(0, current.length + 1)
             );
+
 
             if (!isDeleting && text === fullText) {
                 setTimeout(() => setIsDeleting(true), delay);
@@ -66,7 +72,7 @@ const useRepeatingTypingEffect = (words, typeSpeed = 150, eraseSpeed = 100, dela
 
 // --- Reusable Components & Icons ---
 const GlobalStyles = () => ( <style>{`
-    /* ... (no changes) */
+    /* ... (Global styles remain the same) ... */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     :root {
       --brand-blue: #0052FF;
@@ -115,7 +121,7 @@ const KeyIcon = () => (/* ... SVG ... */ <svg xmlns="http://www.w3.org/2000/svg"
 
 // --- Forgot Password Modal ---
 const ForgotPasswordModal = ({ onClose, setServerMessage }) => {
-    // ... (no changes) ...
+    // ... (logic remains same)
      const [step, setStep] = useState(1);
       const [email, setEmail] = useState('');
       const [otp, setOtp] = useState('');
@@ -132,9 +138,8 @@ const ForgotPasswordModal = ({ onClose, setServerMessage }) => {
 };
 
 // --- Verification Token Modal ---
-// No changes needed here, logic is handled in LoginPage
 const VerificationTokenModal = ({ onClose, onSubmit, isLoading, message, title, buttonText }) => {
-    // ... (no changes) ...
+    // ... (logic remains same)
      const [token, setToken] = useState('');
 
     const handleTokenChange = (e) => {
@@ -176,7 +181,7 @@ const VerificationTokenModal = ({ onClose, onSubmit, isLoading, message, title, 
 
 // --- Home Page ---
 const HomePage = ({ onNavigate }) => {
-    // ... (no changes) ...
+    // ... (logic remains same)
     const typingText = useTypingEffect("Digital", 150);
     return (
       <div className="home-container">
@@ -205,7 +210,7 @@ const HomePage = ({ onNavigate }) => {
             @media (min-width: 992px) {
                 .hero-section { grid-template-columns: 45% 55%; text-align: left; padding: 4rem 5% 5rem; }
                 .hero-subtitle { margin-left: 0; }
-                .hero-animation { margin: 0; max-width: none; height: 600px; }
+                .hero-animation { margin: 0; max-width: none; height: 500px; }
             }
          `}</style>
         <nav className="navbar"><div className="logo-container" /><button className="nav-btn" onClick={() => onNavigate('login')}>Login / Sign Up</button></nav>
@@ -215,7 +220,10 @@ const HomePage = ({ onNavigate }) => {
             <p className="hero-subtitle" style={{animationDelay: '400ms'}}>Join our elite internship program to transform into an industry-ready professional.</p>
             <button className="nav-btn" onClick={() => onNavigate('login')} style={{animationDelay: '600ms'}}>Apply Now</button>
           </div>
-          <div className="hero-animation" style={{animationDelay: '300ms'}}><SplineAnimation /></div>
+          <div className="hero-animation" style={{animationDelay: '300ms'}}>
+             {/* Use the general SplineAnimation here */}
+            <SplineAnimation />
+          </div>
         </main>
         <section className="features-section">
           <h2 className="section-title">Benefits of Skenetic Internships</h2>
@@ -231,7 +239,7 @@ const HomePage = ({ onNavigate }) => {
 
 // --- Login Page ---
 const LoginPage = ({ onNavigate, onLoginSuccess }) => {
-    // ... (States remain mostly the same) ...
+    // ... (logic remains same)
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({ name: '', email: '', password: '', password2: '', phone: '' });
     const [serverMessage, setServerMessage] = useState({ type: '', text: '' });
@@ -244,7 +252,6 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
     const [registrationData, setRegistrationData] = useState(null);
     const [tokenVerificationMessage, setTokenVerificationMessage] = useState('');
     const [isVerifyingToken, setIsVerifyingToken] = useState(false);
-    // --- MODIFICATION: Store Google ID Token for signup flow ---
     const [googleIdTokenForSignup, setGoogleIdTokenForSignup] = useState(null);
 
     const { name, email, password, password2, phone } = formData;
@@ -253,14 +260,13 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
         setServerMessage({ type: '', text: '' });
         setFormData({ name: '', email: '', password: '', password2: '', phone: '' });
         setRegistrationData(null);
-        setGoogleIdTokenForSignup(null); // Clear Google token on view switch
+        setGoogleIdTokenForSignup(null);
         setTokenVerificationMessage('');
     }, [isLogin]);
 
     const onChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
 
     const onSubmit = async (e) => {
-        // ... (No changes in the regular registration/login logic) ...
          e.preventDefault();
         setServerMessage({ type: '', text: '' });
         setTokenVerificationMessage('');
@@ -278,9 +284,8 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                  setServerMessage({ type: 'error', text: 'Please enter a valid 10-digit phone number.' });
                  return;
             }
-            // Store registration data and show token modal
             setRegistrationData({ name, email, password, phone });
-            setGoogleIdTokenForSignup(null); // Ensure google token is cleared
+            setGoogleIdTokenForSignup(null);
             setShowTokenModal(true);
         } else { // Login Flow
             const endpoint = '/api/users/login';
@@ -295,16 +300,12 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
     };
 
     const handleRegisterWithToken = async (verificationToken) => {
-        // ... (No changes here) ...
          if (!registrationData || !verificationToken) return;
 
         setIsVerifyingToken(true);
         setTokenVerificationMessage('');
         try {
-            // 1. Validate the token first
              await axios.post('/api/verification/validate', { token: verificationToken });
-
-            // 2. Proceed with registration
             const endpoint = '/api/users/register';
             const payload = { ...registrationData, verificationToken };
             await axios.post(endpoint, payload);
@@ -321,53 +322,45 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
         }
     };
 
-    // --- NEW: Function to handle direct Google Login (for existing users) ---
     const handleGoogleLoginDirectly = async (googleIdToken) => {
-        setServerMessage({ type: '', text: '' }); // Clear any previous messages
+        setServerMessage({ type: '', text: '' });
         try {
              const endpoint = '/api/users/google-login';
-             const payload = { token: googleIdToken }; // Send Google ID token
+             const payload = { token: googleIdToken };
              const response = await axios.post(endpoint, payload);
-             onLoginSuccess(response.data); // Log in the user directly
+             onLoginSuccess(response.data);
         } catch (err) {
             console.error("Direct Google Login Error:", err);
             setServerMessage({ type: 'error', text: err.response?.data?.message || 'Google login failed.' });
         }
     };
 
-     // --- NEW: Function to handle Google Signup AFTER token verification ---
      const handleGoogleSignupWithToken = async (verificationToken) => {
         if (!googleIdTokenForSignup || !verificationToken) return;
 
         setIsVerifyingToken(true);
         setTokenVerificationMessage('');
         try {
-            // 1. Validate OUR verification token
              await axios.post('/api/verification/validate', { token: verificationToken });
-
-            // 2. If OUR token valid, proceed with Google login/signup API call using the Google ID token
             const endpoint = '/api/users/google-login';
-            const payload = { token: googleIdTokenForSignup }; // Send Google ID token
+            const payload = { token: googleIdTokenForSignup };
             const response = await axios.post(endpoint, payload);
 
-            // Success: Close modal and log in the user (account is created by backend)
             setShowTokenModal(false);
             setGoogleIdTokenForSignup(null);
-            onLoginSuccess(response.data); // Log in the user
+            onLoginSuccess(response.data);
 
         } catch (err) {
-            // --- MODIFICATION: Use correct error message source ---
              setTokenVerificationMessage(err.response?.data?.message || 'Verification or Google sign-up failed.');
         } finally {
             setIsVerifyingToken(false);
         }
     };
 
-    // --- MODIFIED: Google Login `onSuccess` handler ---
     const handleGoogleOnSuccess = async (credentialResponse) => {
-         setServerMessage({ type: '', text: '' }); // Clear messages
+         setServerMessage({ type: '', text: '' });
          setTokenVerificationMessage('');
-         const googleIdToken = credentialResponse.credential; // This IS the ID Token JWT
+         const googleIdToken = credentialResponse.credential;
 
         if (!googleIdToken) {
             setServerMessage({ type: 'error', text: 'Failed to get Google ID token.' });
@@ -375,48 +368,38 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
         }
 
         try {
-            // Decode JWT locally to get email (no need for backend call yet)
-            // Basic JWT decoding (doesn't verify signature, but okay for getting email)
-            const base64Url = googleIdToken.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            const googleUserData = JSON.parse(jsonPayload);
+            // --- Use jwtDecode ---
+            const googleUserData = jwtDecode(googleIdToken);
             const googleEmail = googleUserData.email;
 
             if (!googleEmail) {
                  throw new Error("Could not extract email from Google token.");
             }
 
-            // --- Call NEW backend endpoint to check if user exists ---
             const checkResponse = await axios.get(`/api/users/check-email/${googleEmail}`);
             const userExists = checkResponse.data.exists;
 
             if (userExists) {
-                // --- User exists, log them in directly ---
                 console.log("Google user exists, logging in directly...");
                 handleGoogleLoginDirectly(googleIdToken);
             } else {
-                // --- User does NOT exist, store Google ID token and show OUR verification modal ---
                 console.log("Google user does not exist, showing verification token modal...");
                 setGoogleIdTokenForSignup(googleIdToken);
-                setRegistrationData(null); // Ensure registration form data is cleared
+                setRegistrationData(null);
                 setShowTokenModal(true);
             }
 
         } catch (error) {
             console.error("Google login check/decode error:", error);
              setServerMessage({ type: 'error', text: 'Failed to process Google login. Please try again.' });
-             setGoogleIdTokenForSignup(null); // Clear token on error
+             setGoogleIdTokenForSignup(null);
         }
     };
 
-    // --- MODIFIED: Determine which submit function the modal should call ---
     const handleTokenSubmit = (token) => {
         if (registrationData) {
             handleRegisterWithToken(token);
-        } else if (googleIdTokenForSignup) { // Check for Google signup token
+        } else if (googleIdTokenForSignup) {
             handleGoogleSignupWithToken(token);
         }
     };
@@ -426,7 +409,7 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
         <>
             {/* Styles */}
             <style>{`
-                /* ... (Existing styles) ... */
+                /* ... (Existing styles like animations, info panel, form fields, etc.) ... */
                  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
                 @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -436,7 +419,7 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                 @media (min-width: 992px) {
                     .login-page-wrapper { grid-template-columns: 45% 55%; }
                     .login-info-panel {
-                      background: #0052FF;
+                      background: #0052FF; /* Using brand blue */
                       color: white;
                       display: flex;
                       flex-direction: column;
@@ -456,21 +439,32 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                     .info-panel-content p { font-size: 1.1rem; max-width: 400px; opacity: 0.9; line-height: 1.7; }
                 }
 
-                .bubbles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-                .bubble { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.1); animation: float 25s infinite; }
-                .bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 20s; bottom: -80px; }
-                .bubble:nth-child(2) { width: 30px; height: 30px; left: 40%; animation-duration: 22s; animation-delay: 2s; bottom: -30px; }
-                .bubble:nth-child(3) { width: 50px; height: 50px; left: 70%; animation-duration: 25s; animation-delay: 0s; bottom: -50px; }
-                .bubble:nth-child(4) { width: 100px; height: 100px; left: 85%; animation-duration: 18s; animation-delay: 5s; bottom: -100px; }
-                .bubble:nth-child(5) { width: 40px; height: 40px; left: 25%; animation-duration: 28s; animation-delay: 8s; bottom: -40px; }
+                .bubbles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+                .bubble { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.1); animation: float 25s infinite linear; bottom: -150px; /* Start below screen */ }
+                .bubble:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 20s; }
+                .bubble:nth-child(2) { width: 30px; height: 30px; left: 40%; animation-duration: 22s; animation-delay: 2s; }
+                .bubble:nth-child(3) { width: 50px; height: 50px; left: 70%; animation-duration: 25s; }
+                .bubble:nth-child(4) { width: 100px; height: 100px; left: 85%; animation-duration: 18s; animation-delay: 5s; }
+                .bubble:nth-child(5) { width: 40px; height: 40px; left: 25%; animation-duration: 28s; animation-delay: 8s; }
+                 .bubble:nth-child(6) { width: 60px; height: 60px; left: 55%; animation-duration: 23s; animation-delay: 4s; }
+                 .bubble:nth-child(7) { width: 20px; height: 20px; left: 15%; animation-duration: 30s; animation-delay: 6s; }
 
                 @keyframes float {
-                  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-                  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+                  0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+                  50% { opacity: 0.4; }
+                  100% { transform: translateY(-120vh) rotate(720deg); opacity: 0; } /* Go further up */
                 }
 
                 .login-form-container { display: flex; align-items: center; justify-content: center; padding: 2rem; position: relative; }
-                .login-card { width: 100%; max-width: 420px; animation: slideInUp 1s ease-out 0.5s forwards; opacity: 0; }
+                .login-card {
+                    width: 100%;
+                    max-width: 420px;
+                    animation: slideInUp 1s ease-out 0.5s forwards;
+                    opacity: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
                 .login-header { text-align: center; margin-bottom: 2.5rem; }
                 .login-logo { height: 80px; margin-bottom: 1rem; }
 
@@ -480,16 +474,16 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                 .submit-button { width: 100%; padding: 0.9rem 1rem; border-radius: 0.5rem; border: none; background-color: var(--brand-blue); color: var(--white); font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
                 .submit-button:hover { background-color: #003ECC; transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); }
 
-                .message-box { padding: 1rem; margin-bottom: 1.5rem; border-radius: 0.5rem; text-align: center; font-weight: 500; }
+                .message-box { padding: 1rem; margin-bottom: 1.5rem; border-radius: 0.5rem; text-align: center; font-weight: 500; width: 100%; /* Ensure full width */ box-sizing: border-box; }
                 .error-message-box { background-color: #FEE2E2; color: #B91C1C; }
                 .success-message-box { background-color: #D1FAE5; color: #047857; }
 
-                .form-group { margin-bottom: 1.25rem; position: relative; }
+                .form-group { margin-bottom: 1.25rem; position: relative; width: 100%; }
                 .password-toggle-btn { position: absolute; top: 0; right: 0; height: 100%; background: none; border: none; cursor: pointer; padding: 0 1rem; color: var(--light-text); }
-                .forgot-password-link { display: block; text-align: right; font-size: 0.9rem; text-decoration: none; margin-bottom: 1.5rem; color: var(--brand-blue); cursor: pointer; transition: color 0.2s ease; }
+                .forgot-password-link { display: block; text-align: right; font-size: 0.9rem; text-decoration: none; margin-bottom: 1.5rem; color: var(--brand-blue); cursor: pointer; transition: color 0.2s ease; width: 100%; }
                 .forgot-password-link:hover { color: #003ECC; }
 
-                .divider { text-align: center; margin: 1.5rem 0; color: var(--light-text); position: relative; }
+                .divider { text-align: center; margin: 1.5rem 0; color: var(--light-text); position: relative; width: 100%; }
                 .divider::before, .divider::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border-color); }
                 .divider::before { left: 0; } .divider::after { right: 0; }
 
@@ -497,39 +491,35 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                 .toggle-link { margin-left: 0.5rem; cursor: pointer; font-weight: 600; color: var(--brand-blue); transition: color 0.2s ease; }
                 .toggle-link:hover { color: #003ECC; }
 
-                /* Styles for ForgotPasswordModal content alignment */
                 .modal-content .form-group { text-align: left; }
                 .modal-content .submit-button { margin-top: 1rem; }
 
                 .back-to-home-btn { position: absolute; top: 1rem; left: 1rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: rgba(255,255,255,0.9); border: 1px solid var(--border-color); border-radius: 9999px; color: var(--dark-text); font-weight: 500; text-decoration: none; transition: all 0.3s ease; z-index: 10; }
                 .back-to-home-btn:hover { background-color: var(--white); box-shadow: 0 4px 10px rgba(0,0,0,0.1); transform: translateY(-2px); }
 
-                .animated-account-word {
-                    color: var(--brand-blue);
-                    font-weight: 800;
-                }
-                .animated-account-word::after {
-                    content: '|';
-                    animation: blink 1s step-end infinite;
-                    color: var(--brand-blue);
-                }
+                .animated-account-word { color: var(--brand-blue); font-weight: 800; }
+                .animated-account-word::after { content: '|'; animation: blink 1s step-end infinite; color: var(--brand-blue); }
 
-                 /* Style for Google Login Button Wrapper */
-                 .google-login-button-wrapper {
-                    display: flex;
-                    justify-content: center; /* Center the button */
-                    width: 100%; /* Ensure the wrapper takes full width */
+                /* --- Google Login Button CONTAINER Style --- */
+                .google-sign-in-button-container {
+                    width: fit-content; /* Shrink wrap */
+                    margin: 1.5rem auto; /* Center */
+                    /* line-height: 0; -- Removed this */
                  }
-                 /* Override default Google button styles if needed */
-                .google-login-button-wrapper > div {
-                    width: 100% !important; /* Force button width */
+                 /* --- END --- */
+
+                 /* Optional: Style for the inner div created by the library */
+                .google-sign-in-button-container > div {
                     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1) !important;
                     transition: all 0.3s ease !important;
+                    display: inline-block !important; /* Important might be needed */
+                    vertical-align: top;
                  }
-                .google-login-button-wrapper > div:hover {
+                .google-sign-in-button-container > div:hover {
                     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.15) !important;
                     transform: translateY(-2px);
                 }
+                .login-card form { width: 100%; }
 
             `}</style>
             {showForgotPassword && <ForgotPasswordModal onClose={() => setShowForgotPassword(false)} setServerMessage={setServerMessage} />}
@@ -539,28 +529,28 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                     onSubmit={handleTokenSubmit}
                     isLoading={isVerifyingToken}
                     message={tokenVerificationMessage}
-                    // --- MODIFICATION: Updated Title Logic ---
-                    title={registrationData ? "Enter Registration Token" : "Enter Verification Token"} // Title adjusted
-                    buttonText={registrationData ? "Verify & Register" : "Verify & Continue"} // Button text adjusted
+                    title={registrationData ? "Enter Registration Token" : "Enter Verification Token"}
+                    buttonText={registrationData ? "Verify & Register" : "Verify & Continue"}
                 />
             )}
 
             <div className="login-page-wrapper">
-                {/* Info Panel remains the same */}
                  <div className="login-info-panel">
+                    {/* Bubbles added here */}
                     <div className="bubbles-container">
-                        {[...Array(5)].map((_, i) => <div className="bubble" key={i}></div>)}
+                        {[...Array(7)].map((_, i) => <div className="bubble" key={i}></div>)}
                     </div>
+                     {/* End Bubbles */}
                     <div className="info-panel-content">
                         <h2>Skenetic Digital</h2>
                         <h1>{isLogin ? "Welcome Back!" : "Join Our Team"}</h1>
                         <p>{isLogin ? 'Sign in to access your dashboard and manage your internship progress.' : 'Create an account to start your journey with us and unlock your potential.'}</p>
+                         {/* Spline animation removed */}
                     </div>
                 </div>
                 <div className="login-form-container">
                     <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('home'); }} className="back-to-home-btn"><ArrowLeftIcon/> <span>Back to Home</span></a>
                     <div className="login-card">
-                        {/* Login Header remains the same */}
                          <div className="login-header">
                             <img src={skeneticLogo} alt="Skenetic Logo" className="login-logo" />
                             <h1>
@@ -569,10 +559,9 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                             </h1>
                         </div>
                         {serverMessage.text && <div className={serverMessage.type === 'error' ? 'message-box error-message-box' : 'message-box success-message-box'}>{serverMessage.text}</div>}
-                        {/* Form remains the same */}
                          <form onSubmit={onSubmit} noValidate>
                             {!isLogin && (<div className="form-group"><input type="text" name="name" value={name} onChange={onChange} className="input-field" placeholder="Your Name" required /></div>)}
-                            {!isLogin && (<div className="form-group"><input type="tel" name="phone" value={phone} onChange={onChange} className="input-field" placeholder="Phone Number (10 digits)" maxLength="10" /></div>)}
+                            {!isLogin && (<div className="form-group"><input type="tel" name="phone" value={phone} onChange={onChange} className="input-field" placeholder="Phone Number" maxLength="10" /></div>)}
                             <div className="form-group"><input type="email" name="email" value={email} onChange={onChange} className="input-field" placeholder="Email Address" required /></div>
                             <div className="form-group">
                                 <input type={showPassword ? 'text' : 'password'} name="password" value={password} onChange={onChange} className="input-field" placeholder="Password" required />
@@ -588,20 +577,18 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
                             <button type="submit" className="submit-button">{isLogin ? 'Sign In' : 'Create Account'}</button>
                         </form>
                         <div className="divider">OR</div>
-                        {/* --- MODIFICATION: Use GoogleLogin component --- */}
-                        <div className="google-login-button-wrapper">
+                        <div className="google-sign-in-button-container">
+                             {/* --- FINAL CORRECTION: Removed all optional props --- */}
                              <GoogleLogin
-                                onSuccess={handleGoogleOnSuccess} // Use the new handler
+                                onSuccess={handleGoogleOnSuccess}
                                 onError={() => {
                                     setServerMessage({ type: 'error', text: 'Google login failed. Please try again.' });
                                 }}
-                                useOneTap={false} // Disable one-tap login for more control
-                                shape="rectangular" // Or other shape
-                                theme="outline"
-                                size="large"
-                                width="100%" // Try to force width via prop
-                                text={isLogin ? "signin_with" : "signup_with"} // Dynamic text
+                                useOneTap={false}
+                                // Removed: shape, theme, size, logo_alignment, text
+                                // Let the library render its default button
                              />
+                             {/* --- END FINAL CORRECTION --- */}
                         </div>
                         <p className="toggle-text">
                             {isLogin ? "Don't have an account?" : 'Already have an account?'}
@@ -617,63 +604,111 @@ const LoginPage = ({ onNavigate, onLoginSuccess }) => {
 
 // --- Main App Component ---
 function App() {
-    // ... (States remain the same) ...
      const [user, setUser] = useState(null);
       const [currentPage, setCurrentPage] = useState('home');
       const [isLoading, setIsLoading] = useState(true);
 
       useEffect(() => {
+          // --- CORRECTION: Improved localStorage handling ---
+          let foundUser = null;
+          let needsLogout = false;
           try {
-            const loggedInUser = localStorage.getItem('user');
-            if (loggedInUser) {
-                const foundUser = JSON.parse(loggedInUser);
-                setUser(foundUser);
+            const loggedInUserString = localStorage.getItem('user');
+            if (loggedInUserString) {
+                foundUser = JSON.parse(loggedInUserString);
+                if (foundUser?.token) {
+                    try {
+                        const decodedToken = jwtDecode(foundUser.token);
+                        if (decodedToken.exp * 1000 <= Date.now()) {
+                            // Token expired
+                            needsLogout = true;
+                            console.log("Token expired, logging out.");
+                        }
+                    } catch (decodeError) {
+                         // Invalid token
+                         needsLogout = true;
+                         console.error("Invalid token found", decodeError);
+                    }
+                } else {
+                     // No token in stored object
+                     needsLogout = true;
+                }
             }
           } catch (error) {
+            // Error parsing localStorage
+             needsLogout = true;
             console.error("Failed to parse user from localStorage", error);
-            localStorage.removeItem('user');
+          }
+
+          if (needsLogout) {
+              localStorage.removeItem('user');
+              setUser(null);
+          } else if (foundUser) {
+              setUser(foundUser); // Set user only if valid and not expired
           }
           setIsLoading(false);
-      }, []);
+          // --- END CORRECTION ---
+      }, []); // Run only once on initial load
 
       const handleLoginSuccess = (userData) => {
           localStorage.setItem('user', JSON.stringify(userData));
           setUser(userData);
+          // Determine page based on role AFTER setting user state
+          if (userData?.role === 'admin') {
+             setCurrentPage('admin_dashboard'); // Use a specific key for admin
+          } else {
+             setCurrentPage('student_dashboard'); // Use a specific key for student
+          }
       };
 
       const handleLogout = () => {
           localStorage.removeItem('user');
           setUser(null);
-          setCurrentPage('home');
+          setCurrentPage('home'); // Redirect to home page after logout
       };
 
-      const navigateTo = (page) => { setCurrentPage(page); };
+      // Simple navigation function
+      const navigateTo = (page) => {
+          setCurrentPage(page);
+      };
 
+      // Main page rendering logic
       const renderPage = () => {
         if (isLoading) {
+            // Simple loading indicator
             return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>Loading...</div>;
         }
 
+        // Check if user is logged in
         if (user) {
+          // Check user role and render appropriate dashboard
           if (user.role === 'admin') {
+            // Render Admin Dashboard
             return <AdminDashboard user={user} onLogout={handleLogout} />;
+          } else {
+            // Render Student Platform
+            return <StudentPlatform user={user} onLogout={handleLogout} />;
           }
-          return <StudentPlatform user={user} onLogout={handleLogout} />;
         }
 
+        // If not logged in, show Home or Login page based on currentPage state
         switch (currentPage) {
-          case 'login': return <LoginPage onNavigate={navigateTo} onLoginSuccess={handleLoginSuccess} />;
+          case 'login':
+            return <LoginPage onNavigate={navigateTo} onLoginSuccess={handleLoginSuccess} />;
           case 'home':
           default:
+            // Default to HomePage
             return <HomePage onNavigate={navigateTo} />;
         }
       };
 
+      // Return the main app structure
       return (
         <>
-          <GlobalStyles />
+          <GlobalStyles /> {/* Apply global styles */}
+          {/* GoogleOAuthProvider is now in main.jsx */}
           <div className="page-container">
-            {renderPage()}
+             {renderPage()} {/* Render the currently selected page */}
           </div>
         </>
       );

@@ -8,7 +8,6 @@ import LateAttendancePage from './pages/student/LateAttendancePage.jsx';
 import LeaveRequestPage from './pages/student/LeaveRequestPage.jsx';
 import ProfilePage from './pages/student/ProfilePage.jsx';
 import SettingsPage from './pages/student/SettingsPage.jsx';
-// --- CHANGE: Puthu InfoPage ah import panrom ---
 import InfoPage from './pages/student/InfoPage.jsx';
 
 
@@ -19,14 +18,20 @@ const LateIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" heigh
 const LeaveIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>);
 const ProfileIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>);
 const InfoIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>);
-const SettingsIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>);
+const SettingsIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>);
 const LogoutIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>);
-const ArrowRightIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>);
+// --- NEW: Menu (Hamburger) Icon ---
+const MenuIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>);
+// --- NEW: X (Close) Icon ---
+const XIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>);
+
 
 // --- Main Student Dashboard Layout ---
 const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
-    const [isSidebarExpanded, setSidebarExpanded] = useState(false);
+    const [isSidebarExpanded, setSidebarExpanded] = useState(false); // For desktop hover
     const [activePage, setActivePage] = useState('Dashboard');
+    // --- NEW: State for mobile menu visibility ---
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const studentMenuItems = [
         { name: 'Dashboard', icon: <DashboardIcon /> },
@@ -37,11 +42,17 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
         { name: 'Information', icon: <InfoIcon /> },
         { name: 'Settings', icon: <SettingsIcon /> },
     ];
-    
+
+    // --- NEW: Handler function to change page and close mobile menu ---
+    const handleNavigate = (pageName) => {
+        setActivePage(pageName);
+        setMobileMenuOpen(false); // Close menu on navigation
+    };
+
     const renderContent = () => {
         switch (activePage) {
             case 'Dashboard':
-                return <StudentDashboardContent user={user} onNavigate={setActivePage} />;
+                return <StudentDashboardContent user={user} onNavigate={handleNavigate} />; // Pass handleNavigate
             case 'Attendance':
                 return <AttendancePage />;
             case 'Late Attendance':
@@ -50,25 +61,32 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
                 return <LeaveRequestPage />;
             case 'Profile':
                 return <ProfilePage user={user} />;
-             // --- CHANGE: Puthu InfoPage ah render panrom ---
             case 'Information':
                 return <InfoPage />;
             case 'Settings':
                 return <SettingsPage user={user} onUpdateSuccess={onUserDataUpdate} />;
             default:
-                return <StudentDashboardContent user={user} onNavigate={setActivePage} />;
+                return <StudentDashboardContent user={user} onNavigate={handleNavigate} />; // Pass handleNavigate
         }
     };
 
+    // --- NEW: Handler for Logout - closes menu and logs out ---
+    const handleLogoutClick = () => {
+        setMobileMenuOpen(false);
+        onLogout();
+    };
+
+
     return (
-        <div className="admin-layout">
+        <div className="admin-layout student-layout"> {/* Add student-layout class */}
             <style>{`
+                /* Basic Layout */
                 .admin-layout { display: flex; min-height: 100vh; background-color: var(--light-bg); }
+
+                /* Desktop Sidebar (No Changes Here) */
                 .sidebar { position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
                   background-color: var(--admin-sidebar-bg); color: var(--admin-text-primary); padding: 1.5rem 0; display: flex; flex-direction: column; width: 80px; transition: width 0.3s ease-in-out; overflow-x: hidden; }
-                .main-content { margin-left: 80px; flex-grow: 1; padding: 2rem; display: flex; flex-direction: column; transition: margin-left 0.3s ease-in-out; }
                 .sidebar:hover { width: 260px; }
-                .sidebar:hover + .main-content { margin-left: 260px; }
                 .sidebar-header { padding: 0 1.5rem; display: flex; align-items: center; gap: 1rem; min-height: 70px; box-sizing: border-box; }
                 .sidebar-logo { height: 40px; width: 40px; background-image: url(${skeneticLogo}); background-size: contain; background-repeat: no-repeat; background-position: center; flex-shrink: 0; filter: brightness(0) invert(1); }
                 .sidebar-title { font-size: 1.25rem; font-weight: 700; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; }
@@ -81,10 +99,41 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
                 .menu-text { opacity: 0; transition: opacity 0.3s ease; }
                 .sidebar:hover .menu-text { opacity: 1; }
                 .logout-section { padding: 1rem 0; }
-                .admin-header { display: flex; justify-content: space-between; align-items: center; background: var(--white); padding: 1rem 2rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+
+                /* Main Content Area (Common for Desktop/Mobile) */
+                .main-content { flex-grow: 1; padding: 2rem; display: flex; flex-direction: column; transition: margin-left 0.3s ease-in-out; }
                 .content-area { flex-grow: 1; background: var(--white); padding: 2rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+
+                 /* Desktop specific margins */
+                 @media (min-width: 993px) {
+                    .main-content { margin-left: 80px; }
+                    .sidebar:hover + .main-content { margin-left: 260px; }
+                 }
+
+                /* --- Replaced Desktop Header with Content Header (Common) --- */
+                .content-header {
+                    display: none; /* Hide by default, shown via responsive.css */
+                    justify-content: space-between;
+                    align-items: center;
+                    background: var(--white);
+                    padding: 1rem 2rem;
+                    border-radius: 0.75rem;
+                    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+                    margin-bottom: 2rem;
+                }
+                .content-header h2 { font-size: 1.5rem; margin: 0; color: var(--dark-text); }
+                .user-info-desktop { display: flex; align-items: center; gap: 1rem; }
+                .user-info-desktop div div:first-child { font-weight: 600; }
+                .user-info-desktop div div:last-child { font-size: 0.8rem; color: var(--light-text); }
+
+                /* Show Content Header only on Desktop */
+                @media (min-width: 993px) {
+                    .content-header { display: flex; }
+                }
             `}</style>
-            <nav 
+
+            {/* --- DESKTOP Sidebar (Hidden on Mobile by responsive.css) --- */}
+            <nav
                 className="sidebar"
                 onMouseEnter={() => setSidebarExpanded(true)}
                 onMouseLeave={() => setSidebarExpanded(false)}
@@ -96,7 +145,8 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
                 <ul className="menu-list">
                     {studentMenuItems.map((item) => (
                         <li key={item.name} className={`menu-item ${activePage === item.name ? 'active' : ''}`}>
-                            <a href="#" onClick={(e) => { e.preventDefault(); setActivePage(item.name); }}>
+                            {/* Use handleNavigate for desktop clicks too */}
+                            <a href="#" onClick={(e) => { e.preventDefault(); handleNavigate(item.name); }}>
                                 <span className="menu-icon">{item.icon}</span>
                                 <span className="menu-text">{item.name}</span>
                             </a>
@@ -105,24 +155,64 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
                 </ul>
                 <div className="logout-section">
                     <div className="menu-item">
-                        <a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }}>
+                        {/* Use handleLogoutClick */}
+                        <a href="#" onClick={(e) => { e.preventDefault(); handleLogoutClick(); }}>
                             <span className="menu-icon"><LogoutIcon/></span>
                             <span className="menu-text">Logout</span>
                         </a>
                     </div>
                 </div>
             </nav>
+
+            {/* --- MOBILE Navigation (Handled by responsive.css) --- */}
+            <header className="mobile-header">
+                <h2>{activePage}</h2>
+                <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(true)}>
+                    <MenuIcon />
+                </button>
+            </header>
+            <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)}></div>
+            <nav className={`mobile-nav-menu ${isMobileMenuOpen ? 'open' : ''}`}>
+                <div className="mobile-nav-header">
+                    <img src={skeneticLogo} alt="Skenetic Logo" className="mobile-nav-logo" style={{ filter: 'brightness(0) invert(1)' }} />
+                    <h1 className="mobile-nav-title">Skenetic</h1>
+                    {/* Optional: Add close button inside menu */}
+                    {/* <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(false)} style={{marginLeft: 'auto'}}><XIcon /></button> */}
+                </div>
+                 <ul className="mobile-menu-list">
+                     {studentMenuItems.map((item) => (
+                         <li key={item.name} className={`mobile-menu-item ${activePage === item.name ? 'active' : ''}`}>
+                             <a href="#" onClick={(e) => { e.preventDefault(); handleNavigate(item.name); }}>
+                                 <span className="menu-icon">{item.icon}</span>
+                                 <span>{item.name}</span>
+                             </a>
+                         </li>
+                     ))}
+                 </ul>
+                 <div className="mobile-logout-section">
+                     <div className="mobile-menu-item">
+                         <a href="#" onClick={(e) => { e.preventDefault(); handleLogoutClick(); }}>
+                            <span className="menu-icon"><LogoutIcon/></span>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                 </div>
+            </nav>
+
+            {/* --- Main Content Area --- */}
             <main className="main-content">
-                <header className="admin-header">
+                {/* --- Content Header (Shown only on Desktop) --- */}
+                <header className="content-header">
                     <h2>{activePage}</h2>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div className="user-info-desktop">
                         <div>
-                            <div style={{ fontWeight: '600' }}>{user.name}</div>
-                            <div style={{ fontSize: '0.8rem', color: 'var(--light-text)' }}>Student</div>
+                            <div>{user.name}</div>
+                            <div>Student</div>
                         </div>
-                        <button onClick={onLogout} style={{background: 'none', border: 'none', cursor: 'pointer', color: 'var(--dark-text)'}}><ArrowRightIcon/></button>
+                        {/* Logout button removed from here, unified in sidebars */}
                     </div>
                 </header>
+                {/* --- Page Content --- */}
                 <div className="content-area">
                     {renderContent()}
                 </div>
@@ -133,14 +223,15 @@ const StudentDashboard = ({ user, onLogout, onUserDataUpdate }) => {
 
 
 // --- Student Platform Controller (Handles Survey vs Dashboard logic) ---
+// No changes needed in this part, it handles the logic before showing the dashboard
 const StudentPlatform = ({ user, onLogout }) => {
     const [userData, setUserData] = useState(user);
-    
+
     useEffect(() => {
         const fetchLatestUserData = async () => {
             try {
                 const token = JSON.parse(localStorage.getItem('user'))?.token;
-                if (!token) return; 
+                if (!token) return;
 
                 const config = { headers: { Authorization: `Bearer ${token}` } };
                 const { data } = await axios.get('/api/users/profile', config);
@@ -149,12 +240,16 @@ const StudentPlatform = ({ user, onLogout }) => {
                 localStorage.setItem('user', JSON.stringify(data));
             } catch (error) {
                 console.error("Failed to fetch latest user data. Might be an expired token.", error);
-                onLogout();
+                // Consider logging out if profile fetch fails due to auth error
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                   onLogout();
+                }
             }
         };
 
+        // Fetch data initially and maybe periodically or on focus?
         fetchLatestUserData();
-    }, []); 
+    }, []); // Removed dependency on user prop to avoid re-fetching on parent re-render
 
     const handleSurveyComplete = async (surveyData) => {
         try {
@@ -163,15 +258,16 @@ const StudentPlatform = ({ user, onLogout }) => {
 
             const config = { headers: { Authorization: `Bearer ${token}` } };
             const { data } = await axios.put('/api/users/survey', surveyData, config);
-            
-            setUserData(data); 
+
+            setUserData(data);
             localStorage.setItem('user', JSON.stringify(data));
-            
+
         } catch (error) {
             console.error("Failed to submit survey:", error);
+            // Show error message to user?
         }
     };
-    
+
     const handleUserDataUpdate = (newUserData) => {
         setUserData(newUserData);
         localStorage.setItem('user', JSON.stringify(newUserData));
@@ -186,4 +282,3 @@ const StudentPlatform = ({ user, onLogout }) => {
 };
 
 export default StudentPlatform;
-

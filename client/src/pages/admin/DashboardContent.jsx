@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 // --- ICONS ---
+// (No changes to Icon components)
 const UsersGroupIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>;
 const UserCheckIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>;
 const UserXIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>;
@@ -13,8 +14,11 @@ const InfoIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height
 const CheckBadgeIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12.2l2.4 2.4 5.1-5.1"></path><path d="M12 2a10 10 0 1010 10A10 10 0 0012 2z"></path></svg>;
 const SettingsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82-.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33-1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>;
 const LayersIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>;
+const CheckBadgeFilledIcon = () => (<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#22C55E" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4" stroke="#ffffff" strokeWidth="2"></path></svg>); // Filled green version
+
 
 const DashboardContent = ({ onNavigate }) => {
+    // (State and useEffect for fetching data remain the same)
     const areaChartRef = useRef(null);
     const pieChartRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -49,6 +53,7 @@ const DashboardContent = ({ onNavigate }) => {
         fetchDashboardData();
     }, []);
 
+    // (useEffect for Charts remains the same)
     useEffect(() => {
         let areaChartInstance;
         let pieChartInstance;
@@ -61,11 +66,11 @@ const DashboardContent = ({ onNavigate }) => {
         if (window.Chart && areaChartRef.current && dashboardData.last30DaysAttendance.length > 0) {
             const areaCtx = areaChartRef.current.getContext('2d');
             cleanupCharts();
-            
+
             const presentGradient = areaCtx.createLinearGradient(0, 0, 0, areaCtx.canvas.height);
             presentGradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
             presentGradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
-            
+
             const absentGradient = areaCtx.createLinearGradient(0, 0, 0, areaCtx.canvas.height);
             absentGradient.addColorStop(0, 'rgba(239, 68, 68, 0.4)');
             absentGradient.addColorStop(1, 'rgba(239, 68, 68, 0)');
@@ -106,8 +111,8 @@ const DashboardContent = ({ onNavigate }) => {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { align: 'end', labels: { usePointStyle: true, boxWidth: 8 } }, 
+                    plugins: {
+                        legend: { align: 'end', labels: { usePointStyle: true, boxWidth: 8 } },
                         tooltip: {
                             backgroundColor: '#0F172A', titleFont: { size: 14, family: 'Inter' },
                             bodyFont: { size: 12, family: 'Inter' }, boxPadding: 8,
@@ -124,7 +129,7 @@ const DashboardContent = ({ onNavigate }) => {
         if (window.Chart && pieChartRef.current) {
             const markedStudents = dashboardData.todaysPresent + dashboardData.todaysAbsent + dashboardData.todaysLate;
             const yetToMark = dashboardData.totalStudents - markedStudents;
-            
+
             pieChartInstance = new window.Chart(pieChartRef.current.getContext('2d'), {
                 type: 'pie',
                 data: {
@@ -140,7 +145,7 @@ const DashboardContent = ({ onNavigate }) => {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                              callbacks: {
@@ -154,11 +159,12 @@ const DashboardContent = ({ onNavigate }) => {
                 }
             });
         }
-        
+
         return cleanupCharts;
 
     }, [dashboardData]);
 
+    // (Quick Actions data remains the same)
     const quickActions = [
         { name: 'Students', icon: <UsersGroupIcon />, page: 'Students' },
         { name: 'Requests', icon: <BellIcon />, page: 'Requests', count: dashboardData.pendingRequestsCount },
@@ -176,11 +182,12 @@ const DashboardContent = ({ onNavigate }) => {
 
     return (
         <div>
+            {/* (Styles remain mostly the same, scrollbar styles added to adminresponsive.css) */}
             <style>{`
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
                 .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
                 .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--dark-text); display: flex; align-items: center; gap: 0.75rem; }
-                
+
                 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
                 .stat-card { display: flex; align-items: center; gap: 1.5rem; background-color: var(--white); padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--border-color); transition: all 0.3s ease; }
                 .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.08); border-color: var(--brand-blue); }
@@ -207,14 +214,19 @@ const DashboardContent = ({ onNavigate }) => {
                 .pie-legend { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
                 .legend-item { display: flex; align-items: center; font-size: 0.9rem; color: var(--light-text); }
                 .legend-item .dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 0.75rem; }
-                
+
+                /* --- ⚠️ CHANGE STARTS HERE ⚠️ --- */
+                /* Remove padding from the outer card containing the tables */
+                .table-outer-card { padding: 0 !important; overflow: hidden; /* Hide potential overflow from inner scrollbar */ }
+                /* --- ⚠️ CHANGE ENDS HERE ⚠️ --- */
+
                 .absent-list-table { width: 100%; border-collapse: collapse; }
                 .absent-list-table th, .absent-list-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
                 .absent-list-table thead { background-color: #F8FAFC; }
                 .absent-list-table th { font-size: 0.8rem; text-transform: uppercase; color: var(--light-text); }
                 .status-badge { padding: 4px 10px; border-radius: 999px; font-weight: 600; font-size: 0.8rem; }
                 .status-absent { background-color: #FEE2E2; color: #991B1B; }
-                
+
                 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--light-text); background: #F8FAFC; border-radius: 1rem; }
                 .empty-state svg { color: #22C55E; margin-bottom: 1rem; }
                 .empty-state h4 { color: var(--dark-text); font-size: 1.1rem; margin: 0; }
@@ -224,8 +236,14 @@ const DashboardContent = ({ onNavigate }) => {
                 .domain-table th { font-size: 0.8rem; text-transform: uppercase; color: var(--light-text); }
                 .progress-bar-container { width: 100%; background-color: #E2E8F0; border-radius: 999px; height: 8px; overflow: hidden; }
                 .progress-bar { height: 100%; border-radius: 999px; }
+
+                /* --- ⚠️ CHANGE STARTS HERE ⚠️ --- */
+                /* Ensure the card-list-scrollable div has padding INSIDE */
+                .card-list-scrollable { padding: 1rem; } /* Add padding back to the scrollable div */
+                /* --- ⚠️ CHANGE ENDS HERE ⚠️ --- */
             `}</style>
 
+            {/* (Stats grid remains the same) */}
             <div className="fade-in-up">
                 <div className="stats-grid">
                     <StatCard title="Total Students" value={dashboardData.totalStudents} icon={<UsersGroupIcon />} color="blue" />
@@ -234,6 +252,7 @@ const DashboardContent = ({ onNavigate }) => {
                 </div>
             </div>
 
+            {/* (Quick actions grid remains the same) */}
             <div className="fade-in-up" style={{ animationDelay: '100ms', marginTop: '2.5rem' }}>
                 <h3 className="section-title">Quick Actions</h3>
                 <div className="quick-actions-grid">
@@ -247,6 +266,7 @@ const DashboardContent = ({ onNavigate }) => {
                 </div>
             </div>
 
+            {/* (Charts grid remains the same) */}
             <div className="charts-grid fade-in-up" style={{ animationDelay: '200ms' }}>
                 <div className="chart-card">
                     <h3>Last 30 Days Attendance Trend</h3>
@@ -268,59 +288,72 @@ const DashboardContent = ({ onNavigate }) => {
                 </div>
             </div>
 
+            {/* --- ⚠️ CHANGE STARTS HERE ⚠️ --- */}
+            {/* Domain-wise Attendance */}
              <div className="fade-in-up" style={{ animationDelay: '300ms', marginTop: '2.5rem' }}>
                 <h3 className="section-title"><LayersIcon /> Domain-wise Attendance</h3>
-                 <div className="card" style={{ padding: 0 }}>
-                    <table className="domain-table">
-                        <thead><tr><th>Domain</th><th>Total Students</th><th>Present %</th><th>Absent %</th></tr></thead>
-                        <tbody>
-                            {dashboardData.domainWiseAttendance.map(d => (
-                                <tr key={d.domain}>
-                                    <td>{d.domain}</td>
-                                    <td>{d.totalStudents}</td>
-                                    <td><ProgressBar percentage={d.presentPercentage} color="#22C55E" /></td>
-                                    <td><ProgressBar percentage={d.absentPercentage} color="#EF4444" /></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                 </div>
-            </div>
-
-            <div className="fade-in-up" style={{ animationDelay: '400ms', marginTop: '2.5rem' }}>
-                <h3 className="section-title">Today's Absent List</h3>
-                <div className="card" style={{ padding: 0 }}>
-                    {dashboardData.absentTodayList.length > 0 ? (
-                        <table className="absent-list-table">
-                            <thead>
-                                <tr><th>Student</th><th>Domain</th><th>Phone</th><th>Email</th><th>Status</th></tr>
-                            </thead>
+                {/* Add 'table-outer-card' class to remove padding, 'card' keeps the styling */}
+                 <div className="card table-outer-card">
+                    {/* Wrap table in scrollable div */}
+                    <div className="card-list-scrollable">
+                        <table className="domain-table">
+                            <thead><tr><th>Domain</th><th>Total Students</th><th>Present %</th><th>Absent %</th></tr></thead>
                             <tbody>
-                                {dashboardData.absentTodayList.map(student => (
-                                    <tr key={student._id}>
-                                        <td>{student.name}</td>
-                                        <td>{student.domain || 'N/A'}</td>
-                                        <td>{student.phone || 'N/A'}</td>
-                                        <td>{student.email}</td>
-                                        <td>
-                                            <span className="status-badge status-absent">Absent</span>
-                                        </td>
+                                {dashboardData.domainWiseAttendance.map(d => (
+                                    <tr key={d.domain}>
+                                        <td data-label="Domain">{d.domain}</td>
+                                        <td data-label="Total Students">{d.totalStudents}</td>
+                                        <td data-label="Present %"><ProgressBar percentage={d.presentPercentage} color="#22C55E" /></td>
+                                        <td data-label="Absent %"><ProgressBar percentage={d.absentPercentage} color="#EF4444" /></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
+                    </div> {/* End scrollable div */}
+                 </div>
+            </div>
+
+            {/* Today's Absent List */}
+            <div className="fade-in-up" style={{ animationDelay: '400ms', marginTop: '2.5rem' }}>
+                <h3 className="section-title">Today's Absent List</h3>
+                 {/* Add 'table-outer-card' class to remove padding, 'card' keeps the styling */}
+                <div className="card table-outer-card">
+                    {dashboardData.absentTodayList.length > 0 ? (
+                        /* Wrap table in scrollable div */
+                        <div className="card-list-scrollable">
+                            <table className="absent-list-table">
+                                <thead>
+                                    <tr><th>Student</th><th>Domain</th><th>Phone</th><th>Email</th><th>Status</th></tr>
+                                </thead>
+                                <tbody>
+                                    {dashboardData.absentTodayList.map(student => (
+                                        <tr key={student._id}>
+                                            <td data-label="Student">{student.name}</td>
+                                            <td data-label="Domain">{student.domain || 'N/A'}</td>
+                                            <td data-label="Phone">{student.phone || 'N/A'}</td>
+                                            <td data-label="Email">{student.email}</td>
+                                            <td data-label="Status">
+                                                <span className="status-badge status-absent">Absent</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div> /* End scrollable div */
                     ) : (
                         <div className="empty-state">
-                             <CheckBadgeIcon width="48" height="48" />
+                             <CheckBadgeFilledIcon /> {/* Use filled version */}
                              <h4>All Students are Present Today!</h4>
                         </div>
                     )}
                 </div>
             </div>
+             {/* --- ⚠️ CHANGE ENDS HERE ⚠️ --- */}
         </div>
     );
 };
 
+// (Auxiliary components StatCard, LegendItem, ProgressBar remain the same)
 // Componentes Auxiliares
 const StatCard = ({ title, value, icon, color }) => (
     <div className="stat-card">
@@ -349,4 +382,3 @@ const ProgressBar = ({ percentage, color }) => (
 );
 
 export default DashboardContent;
-
