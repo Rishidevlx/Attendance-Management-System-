@@ -1,0 +1,5 @@
+# This file tells Netlify to add special headers to fix Google Login issues
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
