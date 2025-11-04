@@ -1,29 +1,33 @@
 const nodemailer = require('nodemailer');
 
 /**
- * Sends an email using nodemailer.
+ * Sends an email using Brevo (Sendinblue) SMTP.
  * @param {string} to - Recipient's email address.
  * @param {string} subject - Email subject.
  * @param {string} html - HTML body of the email.
  */
 const sendEmail = async (to, subject, html) => {
     try {
-        // Create a transporter using your email service provider's details from .env
+        // --- CHANGE: Using Brevo SMTP credentials from .env ---
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false, // true for 465, false for other ports
+            host: process.env.BREVO_HOST,     // e.g., 'smtp-relay.brevo.com'
+            port: process.env.BREVO_PORT,     // e.g., 587
+            secure: false, // Brevo uses STARTTLS on port 587
             auth: {
-                user: process.env.EMAIL_USER, // Your email address from .env
-                pass: process.env.EMAIL_PASS, // Your email password or app password from .env
+                user: process.env.BREVO_USER, // Unga Brevo login email
+                pass: process.env.BREVO_KEY,  // Unga Brevo SMTP Key
             },
             tls: {
                 rejectUnauthorized: false
             }
         });
 
+        // --- CHANGE: 'from' address MUST be your Brevo account email ---
+        // Unga personal mail la irundhu mail pora madhiri kaatradhuku,
+        // neenga Brevo la 'sender' ah verify pannanum.
+        // Ippothaiku, Brevo account email ah ve use pannikonga.
         const mailOptions = {
-            from: `"Skenetic Digital" <${process.env.EMAIL_USER}>`,
+            from: `"Skenetic Digital" <${process.env.BREVO_USER}>`,
             to: to,
             subject: subject,
             html: html,
@@ -31,12 +35,11 @@ const sendEmail = async (to, subject, html) => {
 
         // Send the email
         await transporter.sendMail(mailOptions);
-        console.log(`Email sent successfully to ${to}`);
+        console.log(`Email sent successfully to ${to} via Brevo`);
 
     } catch (error) {
         // We log the error but don't throw it.
-        // The main operation (like updating attendance) should not fail just because the email failed to send.
-        console.error(`Error sending email to ${to}:`, error);
+        console.error(`Error sending email via Brevo to ${to}:`, error);
     }
 };
 
