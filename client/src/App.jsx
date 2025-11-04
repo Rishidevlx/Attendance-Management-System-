@@ -182,7 +182,7 @@ const VerificationTokenModal = ({ onClose, onSubmit, isLoading, message, title, 
 // --- Home Page ---
 const HomePage = ({ onNavigate }) => {
     // ... (logic remains same)
-    const typingText = useTypingEffect("Digital", 150);
+    const typingText = useTypingEffect("Diigital", 150);
     return (
       <div className="home-container">
          <style>{`
